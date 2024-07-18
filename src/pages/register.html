@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script
+      src="https://kit.fontawesome.com/7aa7edcb91.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="dark">
+    <div
+      id="app"
+      class="w-full h-full min-h-screen bg-[#eceff1] dark:bg-black text-black dark:text-white"
+    >
+      <div
+        class="w-full flex flex-col justify-start items-center pt-10 min-h-screen"
+      >
+        <div class="w-full max-w-[625px] text-[#ccc] text-left text-2xl mt-3">
+          Załóż konto
+        </div>
+        <form
+          id="register-form"
+          class="flex flex-col w-full max-w-[625px] p-7 mt-4 bg-white dark:bg-[#222222] text-black dark:text-white"
+        >
+          <div class="mb-4">
+            <div class="input-wrapper">
+              <label for="register-email" class="input-label">e-mail</label>
+              <input
+                class="input-field"
+                type="text"
+                id="register-email"
+                placeholder=" "
+              />
+            </div>
+            <div class="error-box hidden"></div>
+          </div>
+
+          <div class="mb-4">
+            <div class="input-wrapper">
+              <label for="register-password" class="input-label">hasło</label>
+              <input
+                class="input-field"
+                type="password"
+                id="register-password"
+                placeholder=""
+              />
+            </div>
+            <div class="error-box hidden"></div>
+          </div>
+
+          <div class="mb-4">
+            <div class="input-wrapper">
+              <label for="register-confirm-password" class="input-label"
+                >powtórz hasło</label
+              >
+              <input
+                class="input-field"
+                type="password"
+                id="register-confirm-password"
+                placeholder=""
+              />
+            </div>
+            <div class="error-box hidden"></div>
+          </div>
+
+          <div class="mb-4">
+            <div class="input-wrapper">
+              <label for="register-telephone-number" class="input-label"
+                >numer telefonu</label
+              >
+              <input
+                class="input-field"
+                type="tel"
+                id="register-telephone-number"
+                placeholder=""
+              />
+            </div>
+            <div class="error-box hidden"></div>
+          </div>
+
+          <div class="mb-4">
+            <div class="input-wrapper">
+              <label for="register-name" class="input-label">imię</label>
+              <input
+                class="input-field"
+                type="text"
+                id="register-name"
+                placeholder=""
+              />
+            </div>
+            <div class="error-box hidden"></div>
+          </div>
+
+          <div class="mb-4">
+            <div class="input-wrapper">
+              <label for="register-last-name" class="input-label"
+                >nazwisko</label
+              >
+              <input
+                class="input-field"
+                type="text"
+                id="register-last-name"
+                placeholder=""
+              />
+            </div>
+            <div class="error-box hidden"></div>
+          </div>
+
+          <button
+            type="submit"
+            class="text-white bg-primary hover:bg-primary_dark text-xl py-2 mt-3"
+          >
+            ZAŁÓŻ KONTO
+          </button>
+          <div id="server-response" class="p-2 text-sm text-[#a50000]"></div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

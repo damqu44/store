@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search</title>
+    <script src="https://kit.fontawesome.com/7aa7edcb91.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="dark">
+    <div
+      id="app"
+      class="w-full h-full min-h-screen bg-[#eceff1] dark:bg-black text-black dark:text-white"
+    >
+    <div class="w-full flex justify-center items-start mt-10 min-h-screen">
+      <div class="w-full flex max-w-[1600px] mx-[150px]">
+        <div
+          id="category-list" 
+          class="flex-col w-[15%] justify-start items-start p-7 hidden sm:flex bg-white dark:bg-[#222222]"
+        ></div>
+        <div class="w-[85%] bg-white dark:bg-[#222222] ml-5 flex flex-col">
+          <div
+            id="sort-dropdown"
+            class="py-3 px-5 relative">
+            <div class="w-min flex flex-row justify-center items-center cursor-pointer hover:text-[#ff5a00] transition-colors ">sortowanie <i class="fas fa-caret-down px-2"></i>
+            </div>
+            <div
+              id="sort-options"
+              class="p-5 mt-5 absolute hidden left-0 z-20 bg-white dark:bg-[#222222] ring-1 ring-white hover:ring-[#ff5a00] rounded-lg">
+              <div id="sort-price-asc" class="text-md tracking-wide cursor-pointer hover:text-[#ff5a00] transition-colors">Sortuj: cena rosnąco</div>
+              <div id="sort-price-desc" class="text-md tracking-wide cursor-pointer hover:text-[#ff5a00] transition-colors">Sortuj: cena malejąco</div>
+              <div id="sort-random" class="text-md tracking-wide cursor-pointer hover:text-[#ff5a00] transition-colors">Sortuj: trafność</div>
+            </div>
+          </div>
+          
+          <ul
+            id="product-list"
+            class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4"
+          ></ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
