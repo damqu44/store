@@ -12,6 +12,7 @@ module.exports = {
     register: './src/js/pages/register/initRegister.js',
     login: './src/js/pages/login/initLogin.js',
     account: './src/js/pages/account/initAccount.js',
+    transaction: './src/js/pages/transaction/initTransaction.js',
   },
   output: {
     filename: '[name].bundle.js',
@@ -89,6 +90,12 @@ module.exports = {
       filename: 'account.html',
       template: './src/pages/account.html',
       chunks: ['account'],
+    }),
+    new HtmlWebpackPlugin({
+      title: 'transaction',
+      filename: 'transaction.html',
+      template: './src/pages/transaction.html',
+      chunks: ['transaction'],
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',

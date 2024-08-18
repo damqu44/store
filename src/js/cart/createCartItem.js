@@ -6,6 +6,13 @@ export function createCartItem(product) {
   const cartItemContainer = document.createElement('div')
   cartItemContainer.id = `cart-item-${product.Id}`
 
+  const cheapestDeliveryMethod = product.deliveryMethods.reduce(
+    (cheapest, method) => (method.Price < cheapest.Price ? method : cheapest),
+    product.deliveryMethods[0]
+  )
+
+  console.log(product)
+
   const price = parseFloat(product.Price).toFixed(2)
   const priceParts = price.split('.')
   const price1 = priceParts[0]
@@ -16,7 +23,9 @@ export function createCartItem(product) {
     'lg:flex-row',
     'p-5',
     'mb-4',
-    'dark:bg-[#222222]'
+    'bg-white',
+    'dark:bg-[#222222]',
+    'cart-item'
   )
   cartItemContainer.innerHTML = `
         <div class="flex w-full lg:w-[55%]">
@@ -40,7 +49,8 @@ export function createCartItem(product) {
           </div>
           <div class="w-[30%] px-3 flex justify-center items-center">
             <div class="flex justify-center items-end">
-              <div class="text-xl h-min text-nowrap">${price1},</div>
+              <div class="hidden">${price}</div>
+              <div class="cart-item-price text-xl h-min text-nowrap" data-deliveryprice=${cheapestDeliveryMethod.Price} data-price="${price}">${price1},</div>
               <div class="text-bease h-min text-nowrap ml-0.5">${price2} zł</div>
             </div>
           </div>

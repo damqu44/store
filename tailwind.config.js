@@ -6,6 +6,8 @@ module.exports = {
       colors: {
         primary: '#1ABC1C',
         primary_dark: '#0e9410',
+        background_light: '#f7f7f7',
+        background_dark: '#222222',
       },
     },
   },

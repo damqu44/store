@@ -7,7 +7,8 @@
   top: 50%;
   left: 10px;
   transform: translateY(-50%);
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, left 0.3s ease, top 0.3s ease,
+    padding 0.3s ease, font-size 0.3s ease;
   background-color: inherit;
   padding: 0 5px;
   pointer-events: none;
@@ -34,10 +35,21 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+}
+
+body.dark input:-webkit-autofill,
+body.dark input:-webkit-autofill:hover,
+body.dark input:-webkit-autofill:focus,
+body.dark input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px #222222 inset !important;
 }
 
 input:-webkit-autofill {
+  -webkit-text-fill-color: black !important;
+}
+
+body.dark input:-webkit-autofill {
   -webkit-text-fill-color: white !important;
 }
 
@@ -50,8 +62,12 @@ input:-webkit-autofill {
   left: 10px;
   transform: translateY(0);
   font-size: 12px;
-  background-color: #222222;
+  background-color: white;
   padding: 0 4px;
+}
+
+body.dark .input-label.active {
+  background-color: #222222 !important;
 }
 
 .input-field-wrong {

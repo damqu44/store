@@ -9,15 +9,17 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body class="dark">
+  <body>
     <div
       id="app"
-      class="w-full h-full min-h-screen bg-[#eceff1] dark:bg-black text-black dark:text-white"
+      class="w-full h-full min-h-screen bg-background_light dark:bg-black text-black dark:text-white"
     >
       <div class="w-full flex justify-center items-start mt-10 min-h-screen">
         <div class="w-full flex max-w-[1600px] mx-[150px]">
-          <div class="swiper w-full h-[335px] bg-white dark:bg-[#222222] group">
-            <div class="swiper-wrapper bg-[#222222]">
+          <div
+            class="swiper w-full h-[335px] bg-white dark:bg-background_dark group"
+          >
+            <div class="swiper-wrapper bg-white dark:bg-background_dark">
               <div class="swiper-slide">
                 <div class="w-full h-[300px] flex flex-row bg-primary">
                   <div
@@ -65,14 +67,16 @@
                   <div
                     class="w-full h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0 justify-center items-center overflow-hidden"
                   >
-                    <div class="w-full h-full border-r-4 border-[#222222]">
+                    <div
+                      class="w-full h-full border-r-4 border-white dark:border-background_dark"
+                    >
                       <img
                         class="object-cover w-full h-full"
                         src="https://www.mojegotowanie.pl/media/cache/big/uploads/media/recipe/0002/35/danie-jednogarnkowe-z-makaronem.jpg"
                       />
                     </div>
                     <div
-                      class="w-full h-full hidden sm:block border-r-4 border-[#222222]"
+                      class="w-full h-full hidden sm:block border-r-4 border-white dark:border-background_dark"
                     >
                       <img
                         class="object-cover w-full h-full hidden sm:block"

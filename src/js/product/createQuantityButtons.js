@@ -1,17 +1,18 @@
 import { handleAddToCart } from '../cart/handleAddToCart'
-
+import { updateProductValue } from '../cart/initializeCart'
 export function createQuantityButtons(product, isUpdate) {
   const quantityContainer = document.getElementById(
     `quantity-container-${product.Id}`
   )
-  const quantityValue = product.Amount ? product.Amount : 1
+
+  const cartInfo = product.cartInfo || {}
+  const quantityValue = cartInfo.Amount ? cartInfo.Amount : 1
 
   quantityContainer.innerHTML = `
     <button class="increment-button w-[35px] h-[35px] flex justify-center items-center border border-[#6d6d6d] outline-none">+</button>
-    <input type="number" id="quantity-input-${product.Id}" name="amount" value="${quantityValue}" min="1" max="${product.Quantity}" class="w-[70px] h-[35px] bg-transparent border border-[#6d6d6d] outline-none text-center appearance-none m-0 no-arrows">
+      <input type="number" id="quantity-input-${product.Id}" name="amount" value="${quantityValue}" min="1" max="${product.Quantity}" class="cart-item-amount w-[70px] h-[35px] bg-transparent border border-[#6d6d6d] outline-none text-center appearance-none m-0 no-arrows">
     <button class="decrement-button w-[35px] h-[35px] flex justify-center items-center border border-[#6d6d6d] outline-none">-</button>
   `
-
   const quantityInput = quantityContainer.querySelector(
     `#quantity-input-${product.Id}`
   )
@@ -66,6 +67,7 @@ function incrementQuantity(input) {
   if (newValue < max) {
     newValue += 1
     input.value = newValue
+    updateProductValue()
   }
 }
 
@@ -76,6 +78,7 @@ function decrementQuantity(input) {
   if (newValue > min) {
     newValue -= 1
     input.value = newValue
+    updateProductValue()
   }
 }
 
@@ -89,4 +92,5 @@ function validateQuantity(input) {
   } else if (value > max) {
     input.value = max
   }
+  updateProductValue()
 }

@@ -1,36 +1,21 @@
 import '../../../index.css'
-import '../../../css/authForm.css'
+import '../../../css/input.css'
 
 import $ from 'jquery'
 import { handleSearch } from '../../search/handleSearch'
 import { loadHeader } from '../../components/header'
 import { loadFooter } from '../../components/footer'
+import {
+  initializeInputFields,
+  showError,
+  removeError,
+} from '../../components/input'
 
 document.addEventListener('DOMContentLoaded', async () => {
-  loadHeader()
+  await loadHeader()
   loadFooter()
 
-  const inputFields = document.querySelectorAll('.input-field')
-
-  inputFields.forEach((inputField) => {
-    const inputLabel = inputField.previousElementSibling
-
-    inputField.addEventListener('focus', function () {
-      if (inputField.value.trim() === '') {
-        inputLabel.classList.add('active')
-      }
-    })
-
-    inputField.addEventListener('blur', function () {
-      if (inputField.value.trim() === '') {
-        inputLabel.classList.remove('active')
-      }
-    })
-
-    if (inputField.value !== '') {
-      inputLabel.classList.add('active')
-    }
-  })
+  initializeInputFields(document.getElementById('login-form'))
 
   $(function () {
     $('#login-form').on('submit', function (e) {
@@ -40,18 +25,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       const password = $('#login-password').val()
 
       let isValid = true
-
-      function showError(inputField, message) {
-        inputField.addClass('input-field-wrong')
-        const errorBox = inputField.closest('.input-wrapper').next('.error-box')
-        errorBox.removeClass('hidden').text(message)
-      }
-
-      function removeError(inputField) {
-        inputField.removeClass('input-field-wrong')
-        const errorBox = inputField.closest('.input-wrapper').next('.error-box')
-        errorBox.addClass('hidden')
-      }
 
       if (email.trim() === '') {
         showError($('#login-email'), 'Wpisz adres e-mail')
@@ -88,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         })
           .done(function (response) {
             $('#server-response').text('')
-            // window.location.href = '/'
+            window.location.href = '/'
           })
           .fail(function (xhr) {
             $('#server-response').text(xhr.responseJSON.error)

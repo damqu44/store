@@ -9,20 +9,23 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body class="dark">
+  <body>
     <div
       id="app"
-      class="w-full h-full min-h-screen bg-[#eceff1] dark:bg-black text-black dark:text-white"
+      class="w-full h-full min-h-screen bg-background_light dark:bg-black text-black dark:text-white"
     >
       <div
         class="w-full flex flex-col justify-start items-center pt-10 min-h-screen"
       >
-        <div class="w-full max-w-[625px] text-[#ccc] text-left text-2xl mt-3">
+        <div
+          class="w-full max-w-[625px] text-[#808080] text-left text-2xl mt-3"
+        >
           Załóż konto
         </div>
         <form
           id="register-form"
-          class="flex flex-col w-full max-w-[625px] p-7 mt-4 bg-white dark:bg-[#222222] text-black dark:text-white"
+          class="flex flex-col w-full max-w-[625px] p-7 mt-4 bg-white dark:bg-background_dark text-black dark:text-white"
+          autocomplete="off"
         >
           <div class="mb-4">
             <div class="input-wrapper">
@@ -31,7 +34,7 @@
                 class="input-field"
                 type="text"
                 id="register-email"
-                placeholder=" "
+                placeholder=""
               />
             </div>
             <div class="error-box hidden"></div>
@@ -115,6 +118,14 @@
             ZAŁÓŻ KONTO
           </button>
           <div id="server-response" class="p-2 text-sm text-[#a50000]"></div>
+          <div class="p-2 text-sm">
+            Masz już konto?
+            <a
+              href="/login.html"
+              class="underline text-primary_dark hover:text-primary"
+              >Zaloguj się</a
+            >
+          </div>
         </form>
       </div>
     </div>

@@ -1,0 +1,29 @@
+.address-box {
+  position: relative;
+  width: calc(50% - 10px);
+  height: 160px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-size: 14px;
+  text-wrap: nowrap;
+  overflow: hidden;
+}
+
+.address-box:hover {
+  border: 1px solid black;
+}
+
+body.dark .address-box {
+  border: 1px solid #4d4d4d;
+}
+
+body.dark .address-box:hover {
+  border: 1px solid #ccc;
+}
+
+@media (max-width: 670px) {
+  .address-box {
+    width: 100%;
+  }
+}

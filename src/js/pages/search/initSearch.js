@@ -75,16 +75,21 @@ function filterProductsByCategory(category) {
   displayProducts(filteredProducts)
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  loadHeader()
-  setSortOptions()
-  fetchCategories()
-  setupCategoryFilters()
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadHeader()
 
   const queryParams = new URLSearchParams(window.location.search)
   const productsJson = queryParams.get('products')
   allProducts = JSON.parse(productsJson)
+
+  if (allProducts.length > 0) {
+    setSortOptions()
+    fetchCategories()
+    setupCategoryFilters()
+  }
+
   displayProducts(allProducts)
+
   loadFooter()
   const searchForm = document.getElementById('search-form')
   searchForm.addEventListener('submit', handleSearch)

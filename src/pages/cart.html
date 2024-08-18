@@ -9,18 +9,66 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body class="dark">
+  <body>
     <div
       id="app"
-      class="w-full h-full min-h-screen bg-[#eceff1] dark:bg-black text-black dark:text-white"
+      class="w-full h-full min-h-screen bg-background_light dark:bg-black text-black dark:text-white"
     >
       <div class="w-full flex justify-center items-start pt-10 min-h-screen">
-        <div class="flex w-full max-w-[1600px] mx-[150px]">
-          <div id="cart-content" class="w-[70%]"></div>
+        <div id="cart" class="flex flex-col w-full sm:flex-row max-w-[1250px]">
+          <div id="cart-content" class="flex-1 sm:w-full relative mt-10">
+            <div class="flex w-full ml-2 absolute top-[-50px]">
+              <div
+                class="w-1/3 border border-x-0 border-t-0 border-b-[6px] border-primary pb-2 ml-8 text-primary truncate"
+              >
+                Twój koszyk
+              </div>
+              <div
+                class="w-1/3 border border-x-0 border-t-0 border-b-[6px] border-gray-300 pb-2 mx-1 text-gray-400 truncate"
+              >
+                Dostawa i płatność
+              </div>
+              <div
+                class="w-1/3 border border-x-0 border-t-0 border-b-[6px] border-gray-300 pb-2 mr-8 text-gray-400 truncate"
+              >
+                Gotowe
+              </div>
+            </div>
+          </div>
           <div
             id="cart-summary"
-            class="w-[30%] ml-10 p-10 bg-white dark:bg-[#222222]"
-          ></div>
+            class="w-full sm:w-[410px] m-0 sm:ml-4 p-10 mt-10 bg-white dark:bg-background_dark text-base"
+          >
+            <div class="flex w-full justify-between items-center mb-2">
+              <div>Wartość produktów</div>
+              <div id="products-cost">0 zł</div>
+            </div>
+            <div class="flex w-full justify-between items-center">
+              <div>Dostawa od</div>
+              <div id="delivery-cost">0 zł</div>
+            </div>
+            <div class="border border-b-0 border-x-0 border-[#ccc] my-6"></div>
+            <div class="flex w-full justify-between items-center">
+              <div>Razem z dostawą</div>
+              <div
+                id="products-with-delivery-cost"
+                class="font-bold text-xl text-gray-600"
+              >
+                0 zł
+              </div>
+            </div>
+            <div
+              id="transaction-button"
+              class="w-full bg-primary hover:bg-primary_dark cursor-pointer text-center my-3 p-2 text-md tracking-widest text-white"
+            >
+              DOSTAWA I PŁATNOŚĆ
+            </div>
+            <div
+              class="w-full font-light text-center text-md cursor-pointer pt-2 text-black hover:text-purple-800 transition-colors"
+            >
+              <a href="/index.html">KONTYNUUJ ZAKUPY</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

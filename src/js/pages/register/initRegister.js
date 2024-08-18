@@ -1,35 +1,17 @@
 import '../../../index.css'
-import '../../../css/authForm.css'
+import '../../../css/input.css'
 
 import $ from 'jquery'
 import { handleSearch } from '../../search/handleSearch'
 import { loadHeader } from '../../components/header'
 import { loadFooter } from '../../components/footer'
+import { initializeInputFields } from '../../components/input'
 
 document.addEventListener('DOMContentLoaded', async () => {
-  loadHeader()
+  await loadHeader()
   loadFooter()
-  const inputFields = document.querySelectorAll('.input-field')
 
-  inputFields.forEach((inputField) => {
-    const inputLabel = inputField.previousElementSibling
-
-    inputField.addEventListener('focus', function () {
-      if (inputField.value.trim() === '') {
-        inputLabel.classList.add('active')
-      }
-    })
-
-    inputField.addEventListener('blur', function () {
-      if (inputField.value.trim() === '') {
-        inputLabel.classList.remove('active')
-      }
-    })
-
-    if (inputField.value !== '') {
-      inputLabel.classList.add('active')
-    }
-  })
+  initializeInputFields(document.getElementById('register-form'))
 
   $(function () {
     $('#register-form').on('submit', function (e) {

@@ -29,8 +29,8 @@ const swiper = new Swiper('.swiper', {
   },
 })
 
-document.addEventListener('DOMContentLoaded', () => {
-  loadHeader()
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadHeader()
 
   loadFooter()
   const searchForm = document.getElementById('search-form')
