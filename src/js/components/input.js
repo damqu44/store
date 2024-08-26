@@ -1,13 +1,12 @@
+import '../../css/input.css'
+
 export function initializeInputFields(containerSelector = document) {
   const inputFields = containerSelector.querySelectorAll('.input-field')
-
   inputFields.forEach((inputField) => {
     const inputLabel = inputField.previousElementSibling
 
     inputField.addEventListener('focus', function () {
-      if (inputField.value.trim() === '') {
-        inputLabel.classList.add('active')
-      }
+      inputLabel.classList.add('active')
     })
 
     inputField.addEventListener('blur', function () {
@@ -23,13 +22,21 @@ export function initializeInputFields(containerSelector = document) {
 }
 
 export function showError(inputField, message) {
-  inputField.addClass('input-field-wrong')
-  const errorBox = inputField.closest('.input-wrapper').next('.error-box')
-  errorBox.removeClass('hidden').text(message)
+  inputField.classList.add('input-field-wrong')
+  const errorBox = inputField.closest('.input-wrapper').nextElementSibling
+
+  if (errorBox && errorBox.classList.contains('error-box')) {
+    errorBox.classList.remove('hidden')
+    errorBox.textContent = message
+  }
 }
 
 export function removeError(inputField) {
-  inputField.removeClass('input-field-wrong')
-  const errorBox = inputField.closest('.input-wrapper').next('.error-box')
-  errorBox.addClass('hidden')
+  inputField.classList.remove('input-field-wrong')
+  const errorBox = inputField.closest('.input-wrapper').nextElementSibling
+
+  if (errorBox && errorBox.classList.contains('error-box')) {
+    errorBox.classList.add('hidden')
+    errorBox.textContent = ''
+  }
 }

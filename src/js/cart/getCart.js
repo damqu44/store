@@ -13,7 +13,6 @@ export async function getCart() {
     }
 
     const data = await response.json()
-    console.log(data)
     return data.message || []
   } catch (error) {
     console.error('Error fetching cart data:', error)

@@ -10,11 +10,9 @@ export async function loadHeader() {
     dataCart = await getCart()
 
     if (
-      (dataCart && Array.isArray(dataCart.CartItems)) ||
-      Array.isArray(dataCart)
+      (!dataCart && !Array.isArray(dataCart.CartItems)) ||
+      !Array.isArray(dataCart)
     ) {
-      console.log('succesfully getting cart', dataCart)
-    } else {
       console.warn('cart is empty', dataCart)
     }
   } catch (error) {

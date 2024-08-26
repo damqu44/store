@@ -75,6 +75,7 @@ body.dark .input-label.active {
 }
 
 .error-box {
+  flex-grow: 1;
   font-size: 14px;
   color: #a50000;
   padding-left: 2px;

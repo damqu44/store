@@ -68,7 +68,10 @@
             Wyloguj
           </div>
         </div>
-
+        <div
+        id="modal-backdrop"
+        class="fixed top-0 left-0 w-full h-full bg-black/70 hidden z-10"
+      ></div>
         <div
           id="address-book"
           class="acc-content flex-col h-min w-[75%] min-w-[350px] p-5 bg-white dark:bg-background_dark hidden"
@@ -78,12 +81,127 @@
             Masz możliwość dodania <span class="font-bold">4/5 adresów.</span>
           </div>
           <div class="w-full p-5 flex flex-wrap gap-2">
-            <div class="address-box">
+            <div id="add-address-delivery-btn" class="address-box">
               Nowy adres
               <div class="absolute left-4 bottom-3 text-xl">
                 <i class="fa-solid fa-plus"></i>
               </div>
             </div>
+            <div
+              id="add-address-delivery-modal"
+              class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full sm:w-[50vw] max-h-[90vh] bg-white dark:bg-background_dark px-10 py-5 hidden overflow-auto z-20"
+            >
+              <form id="add-address-delivery-form" class="flex flex-col">
+                <div class="font-bold text-2xl mb-4">Dodaj nowy adres</div>
+                <div id="add-address-delivery-personal-data" class="flex w-full">
+                  <div class="flex flex-col flex-1">
+                    <div class="input-wrapper flex-1 mr-3">
+                      <label for="add-address-delivery-name" class="input-label">Imię</label>
+                      <input
+                        class="input-field"
+                        type="text"
+                        id="add-address-delivery-name"
+                        name="addAddressDeliveryName"
+                        placeholder=""
+                      />
+                    </div>
+                    <div class="error-box hidden"></div>
+                  </div>
+                  <div class="flex flex-col flex-1">
+                    <div class="input-wrapper flex-1">
+                      <label for="add-address-delivery-last-name" class="input-label">Nazwisko</label>
+                      <input
+                        class="input-field"
+                        type="text"
+                        id="add-address-delivery-last-name"
+                        name="addAddressDeliveryLastName"
+                        placeholder=""
+                      />
+                    </div>
+                    <div class="error-box hidden"></div>
+                  </div>
+                </div>
+                <div class="input-wrapper mt-3">
+                  <label for="add-address-delivery-street" class="input-label">Adres</label>
+                  <input
+                    class="input-field"
+                    type="text"
+                    id="add-address-delivery-street"
+                    name="addAddressDeliveryStreet"
+                    placeholder=""
+                  />
+                </div>
+                <div class="error-box hidden"></div>
+                <div class="input-wrapper mt-3">
+                  <label for="add-address-delivery-comment" class="input-label">Dodatkowe informacje</label>
+                  <input
+                    class="input-field"
+                    type="text"
+                    id="add-address-delivery-comment"
+                    name="addAddressDeliveryComment"
+                    placeholder=""
+                  />
+                </div>
+                <div class="error-box hidden"></div>
+                <div id="add-address-delivery-post-data" class="flex w-full">
+                  <div class="flex flex-col flex-1">
+                    <div class="input-wrapper flex-1 mt-3 mr-3">
+                      <label for="add-address-delivery-zip-code" class="input-label">Kod pocztowy</label>
+                      <input
+                        class="input-field"
+                        type="text"
+                        id="add-address-delivery-zip-code"
+                        name="addAddressDeliveryZipCode"
+                        placeholder=""
+                      />
+                    </div>
+                    <div class="error-box hidden"></div>
+                  </div>
+                  <div class="flex flex-col flex-1">
+                    <div class="input-wrapper flex-1 mt-3">
+                      <label for="add-address-delivery-city" class="input-label">Miasto</label>
+                      <input
+                        class="input-field"
+                        type="text"
+                        id="add-address-delivery-city"
+                        name="addAddressDeliveryCity"
+                        placeholder=""
+                      />
+                    </div>
+                    <div class="error-box hidden"></div>
+                  </div>
+                </div>
+                <div class="input-wrapper mt-3">
+                  <label for="add-address-delivery-telephone" class="input-label">Numer telefonu komórkowego</label>
+                  <input
+                    class="input-field"
+                    type="text"
+                    id="add-address-delivery-telephone"
+                    name="addAddressDeliveryTelephone"
+                    placeholder=""
+                  />
+                </div>
+                <div class="error-box hidden"></div>
+                  <button
+                    type="submit"
+                    id="add-address-delivery-send-btn"
+                    class="text-white text-left bg-primary_dark hover:bg-primary text-base font-semibold py-2 px-5 mt-4 mb-2 text-nowrap"
+                  >
+                    ZAPISZ ADRES
+                  </button>
+                  <button
+                    type="button"
+                    id="add-address-delivery-cancel-btn"
+                    class="text-left bg-white dark:bg-background_dark border border-[#ccc] hover:text-gray-500 dark:hover:text-gray-200 text-base font-semibold py-2 px-5 text-nowrap"
+                  >
+                    ANULUJ
+                  </button>
+                  <div
+                    id="server-response-add-address-delivery"
+                    class="p-2 text-sm text-[#a50000]"
+                  ></div>
+                </form>
+                </div>
             <div class="address-box">
               <div id="user-address-full-name" class="font-bold pb-2"></div>
               <div id="user-address-street">Bąków Górny 42</div>
@@ -108,6 +226,7 @@
           id="personal-data"
           class="acc-content flex flex-col h-min w-[75%] min-w-[350px] p-5 bg-white dark:bg-background_dark"
         >
+       
           <div class="font-bold text-2xl">MOJE DANE</div>
           <div class="text-sm pt-2 pb-5">
             W każdej chwili możesz edytować swoje dane osobowe, by zawsze były
@@ -126,12 +245,8 @@
               EDYCJA
             </div>
             <div
-              id="edit-personal-data-backdrop"
-              class="fixed top-0 left-0 w-full h-full bg-black/70 hidden"
-            ></div>
-            <div
               id="edit-personal-data-modal"
-              class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full sm:w-[50vw] bg-white dark:bg-background_dark px-10 py-5 hidden"
+              class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full sm:w-[50vw] max-h-[90vh] bg-white dark:bg-background_dark px-10 py-5 hidden overflow-auto z-20"
             >
               <form id="edit-personal-data-form" class="flex flex-col">
                 <div class="font-bold text-2xl mb-4">EDYTUJ SWOJE DANE</div>
@@ -212,13 +327,12 @@
                         id="gender-man"
                         type="radio"
                         name="gender"
-                        value="man"
+                        value="MAN"
                         class="radio-label"
                       />
                       <label class="radio-label" for="gender-man"></label>
                       <div class="text-lg ml-2 text-center">Mężczyzna</div>
                     </div>
-
                     <div
                       data-for="gender-female"
                       class="flex justify-start items-center cursor-pointer clickable-label"
@@ -227,7 +341,7 @@
                         id="gender-female"
                         type="radio"
                         name="gender"
-                        value="female"
+                        value="FEMALE"
                         class="radio-label"
                       />
                       <label
@@ -236,6 +350,9 @@
                       ></label>
                       <div class="text-lg ml-2 text-start">Kobieta</div>
                     </div>
+                  </div>
+                  <div id="gender-error-box" class="error-box hidden">
+                    Nie wybrano płci
                   </div>
                   <button
                     type="submit"
@@ -251,6 +368,10 @@
                   >
                     ANULUJ
                   </button>
+                  <div
+                    id="server-response-edit-personal-data"
+                    class="p-2 text-sm text-[#a50000]"
+                  ></div>
                 </div>
               </form>
             </div>
@@ -260,24 +381,161 @@
             <div class="font-bold text-base">E-MAIL</div>
             <div id="user-email" class="font-light py-1"></div>
             <div
+              id="edit-email-btn"
               class="w-min mb-3 text-xs font-bold underline tracking-wide cursor-pointer text-primary hover:text-white hover:bg-primary hover:no-underline transition-all"
             >
               EDYCJA
+            </div>
+            <div
+              id="edit-email-modal"
+              class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full sm:w-[50vw] max-h-[90vh] bg-white dark:bg-background_dark px-10 py-5 hidden overflow-auto z-20"
+            >
+              <form id="edit-email-form" class="flex flex-col">
+                <div class="font-bold text-2xl mb-4">EDYTUJ ADRES E-MAIL</div>
+                <div class="input-wrapper">
+                  <label for="edit-email" class="input-label">E-mail</label>
+                  <input
+                    class="input-field"
+                    type="text"
+                    id="edit-email"
+                    name="editEmail"
+                    placeholder=""
+                  />
+                </div>
+                <div class="error-box hidden"></div>
+                  <button
+                    type="submit"
+                    id="edit-email-send-btn"
+                    class="text-white text-left bg-primary_dark hover:bg-primary text-base font-semibold py-2 px-5 mt-4 mb-2 text-nowrap"
+                  >
+                    ZAPISZ ZMIANY
+                  </button>
+                  <button
+                    type="button"
+                    id="edit-email-cancel-btn"
+                    class="text-left bg-white dark:bg-background_dark border border-[#ccc] hover:text-gray-500 dark:hover:text-gray-200 text-base font-semibold py-2 px-5 text-nowrap"
+                  >
+                    ANULUJ
+                  </button>
+                  <div
+                    id="server-response-edit-email"
+                    class="p-2 text-sm text-[#a50000]"
+                  ></div>
+                </div>
+              </form>
             </div>
             <div class="font-bold text-base">HASŁO</div>
             <div class="font-light py-1">***********</div>
             <div
+              id="edit-password-btn"
               class="w-min mb-3 text-xs font-bold underline tracking-wide cursor-pointer text-primary hover:text-white hover:bg-primary hover:no-underline transition-all"
             >
               EDYCJA
             </div>
+            <div
+              id="edit-password-modal"
+              class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full sm:w-[50vw] max-h-[90vh] bg-white dark:bg-background_dark px-10 py-5 hidden overflow-auto z-20"
+            >
+              <form id="edit-password-form" class="flex flex-col">
+                <div class="font-bold text-2xl mb-4">EDYTUJ SWOJE HASŁO</div>
+                <div class="input-wrapper">
+                  <label for="edit-old-password" class="input-label">Stare Hasło</label>
+                  <input
+                    class="input-field"
+                    type="password"
+                    id="edit-old-password"
+                    name="editOldPassword"
+                    placeholder=""
+                  />
+                </div>
+                <div class="error-box hidden"></div>
+                <div class="input-wrapper mt-3">
+                  <label for="edit-password" class="input-label">Nowe Hasło</label>
+                  <input
+                    class="input-field"
+                    type="password"
+                    id="edit-password"
+                    name="editPassword"
+                    placeholder=""
+                  />
+                </div>
+                <div class="error-box hidden"></div>
+                <div class="input-wrapper mt-3">
+                  <label for="edit-confirm-password" class="input-label">Powtórz Hasło</label>
+                  <input
+                    class="input-field"
+                    type="password"
+                    id="edit-confirm-password"
+                    name="editConfirmPassword"
+                    placeholder=""
+                  />
+                </div>
+                <div class="error-box hidden"></div>
+                  <button
+                    type="submit"
+                    id="edit-password-send-btn"
+                    class="text-white text-left bg-primary_dark hover:bg-primary text-base font-semibold py-2 px-5 mt-4 mb-2 text-nowrap"
+                  >
+                    ZAPISZ ZMIANY
+                  </button>
+                  <button
+                    type="button"
+                    id="edit-password-cancel-btn"
+                    class="text-left bg-white dark:bg-background_dark border border-[#ccc] hover:text-gray-500 dark:hover:text-gray-200 text-base font-semibold py-2 px-5 text-nowrap"
+                  >
+                    ANULUJ
+                  </button>
+                  <div
+                    id="server-response-edit-password"
+                    class="p-2 text-sm text-[#a50000]"
+                  ></div>
+                </form>
+                </div>
             <div class="font-bold text-base">NUMER TELEFONU</div>
             <div id="user-telephone" class="font-light py-1"></div>
             <div
+            id="edit-telephone-btn"
               class="w-min mb-3 text-xs font-bold underline tracking-wide cursor-pointer text-primary hover:text-white hover:bg-primary hover:no-underline transition-all"
             >
               EDYCJA
             </div>
+            <div
+              id="edit-telephone-modal"
+              class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full sm:w-[50vw] max-h-[90vh] bg-white dark:bg-background_dark px-10 py-5 hidden overflow-auto z-20"
+            >
+              <form id="edit-telephone-form" class="flex flex-col">
+                <div class="font-bold text-2xl mb-4">EDYTUJ SWÓJ NUMER TELEFONU</div>
+                <div class="input-wrapper">
+                  <label for="edit-telephone" class="input-label">Numer telefonu</label>
+                  <input
+                    class="input-field"
+                    type="text"
+                    id="edit-telephone"
+                    name="editTelephone"
+                    placeholder=""
+                  />
+                </div>
+                <div class="error-box hidden"></div>
+                  <button
+                    type="submit"
+                    id="edit-telephone-send-btn"
+                    class="text-white text-left bg-primary_dark hover:bg-primary text-base font-semibold py-2 px-5 mt-4 mb-2 text-nowrap"
+                  >
+                    ZAPISZ ZMIANY
+                  </button>
+                  <button
+                    type="button"
+                    id="edit-telephone-cancel-btn"
+                    class="text-left bg-white dark:bg-background_dark border border-[#ccc] hover:text-gray-500 dark:hover:text-gray-200 text-base font-semibold py-2 px-5 text-nowrap"
+                  >
+                    ANULUJ
+                  </button>
+                  <div
+                    id="server-response-edit-telephone"
+                    class="p-2 text-sm text-[#a50000]"
+                  ></div>
+                </form>
+                </div>
           </div>
         </div>
       </div>
