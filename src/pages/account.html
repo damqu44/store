@@ -38,10 +38,10 @@
         </div>
       </div>
 
-      <div class="flex w-full max-w-[1000px] mt-16 px-16 min-h-screen">
+      <div class="justify-center items-start flex flex-col-reverse lg:flex-row w-full max-w-[1350px] mt-16 px-16 min-h-screen">
         <div
           id="acc-menu"
-          class="flex flex-col items-center justify-center h-min w-[25%] min-w-[150px] mr-10 bg-white dark:bg-background_dark text-base"
+          class="flex flex-col items-center justify-center h-min w-[100%] lg:w-[25%] min-w-[150px] mr-10 bg-white dark:bg-background_dark text-base mt-5 lg:mt-0"
         >
           <div
             id="personal-data-btn"
@@ -74,157 +74,22 @@
       ></div>
         <div
           id="address-book"
-          class="acc-content flex-col h-min w-[75%] min-w-[350px] p-5 bg-white dark:bg-background_dark hidden"
+          class="acc-content flex-col h-min w-[100%] lg:w-[75%] min-w-[350px] p-5 bg-white dark:bg-background_dark hidden"
         >
           <div class="font-bold text-2xl">KSIĄŻKA ADRESOWA</div>
-          <div class="text-sm pt-2 pb-5">
-            Masz możliwość dodania <span class="font-bold">4/5 adresów.</span>
-          </div>
-          <div class="w-full p-5 flex flex-wrap gap-2">
+          <div id="address-delivery-limit" class="text-sm pt-2 pb-5"></div>
+          <div id="address-delivery-wrapper" class="w-full p-5 flex flex-col sm:flex-row sm:flex-wrap gap-2">
             <div id="add-address-delivery-btn" class="address-box">
               Nowy adres
               <div class="absolute left-4 bottom-3 text-xl">
                 <i class="fa-solid fa-plus"></i>
               </div>
             </div>
-            <div
-              id="add-address-delivery-modal"
-              class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full sm:w-[50vw] max-h-[90vh] bg-white dark:bg-background_dark px-10 py-5 hidden overflow-auto z-20"
-            >
-              <form id="add-address-delivery-form" class="flex flex-col">
-                <div class="font-bold text-2xl mb-4">Dodaj nowy adres</div>
-                <div id="add-address-delivery-personal-data" class="flex w-full">
-                  <div class="flex flex-col flex-1">
-                    <div class="input-wrapper flex-1 mr-3">
-                      <label for="add-address-delivery-name" class="input-label">Imię</label>
-                      <input
-                        class="input-field"
-                        type="text"
-                        id="add-address-delivery-name"
-                        name="addAddressDeliveryName"
-                        placeholder=""
-                      />
-                    </div>
-                    <div class="error-box hidden"></div>
-                  </div>
-                  <div class="flex flex-col flex-1">
-                    <div class="input-wrapper flex-1">
-                      <label for="add-address-delivery-last-name" class="input-label">Nazwisko</label>
-                      <input
-                        class="input-field"
-                        type="text"
-                        id="add-address-delivery-last-name"
-                        name="addAddressDeliveryLastName"
-                        placeholder=""
-                      />
-                    </div>
-                    <div class="error-box hidden"></div>
-                  </div>
-                </div>
-                <div class="input-wrapper mt-3">
-                  <label for="add-address-delivery-street" class="input-label">Adres</label>
-                  <input
-                    class="input-field"
-                    type="text"
-                    id="add-address-delivery-street"
-                    name="addAddressDeliveryStreet"
-                    placeholder=""
-                  />
-                </div>
-                <div class="error-box hidden"></div>
-                <div class="input-wrapper mt-3">
-                  <label for="add-address-delivery-comment" class="input-label">Dodatkowe informacje</label>
-                  <input
-                    class="input-field"
-                    type="text"
-                    id="add-address-delivery-comment"
-                    name="addAddressDeliveryComment"
-                    placeholder=""
-                  />
-                </div>
-                <div class="error-box hidden"></div>
-                <div id="add-address-delivery-post-data" class="flex w-full">
-                  <div class="flex flex-col flex-1">
-                    <div class="input-wrapper flex-1 mt-3 mr-3">
-                      <label for="add-address-delivery-zip-code" class="input-label">Kod pocztowy</label>
-                      <input
-                        class="input-field"
-                        type="text"
-                        id="add-address-delivery-zip-code"
-                        name="addAddressDeliveryZipCode"
-                        placeholder=""
-                      />
-                    </div>
-                    <div class="error-box hidden"></div>
-                  </div>
-                  <div class="flex flex-col flex-1">
-                    <div class="input-wrapper flex-1 mt-3">
-                      <label for="add-address-delivery-city" class="input-label">Miasto</label>
-                      <input
-                        class="input-field"
-                        type="text"
-                        id="add-address-delivery-city"
-                        name="addAddressDeliveryCity"
-                        placeholder=""
-                      />
-                    </div>
-                    <div class="error-box hidden"></div>
-                  </div>
-                </div>
-                <div class="input-wrapper mt-3">
-                  <label for="add-address-delivery-telephone" class="input-label">Numer telefonu komórkowego</label>
-                  <input
-                    class="input-field"
-                    type="text"
-                    id="add-address-delivery-telephone"
-                    name="addAddressDeliveryTelephone"
-                    placeholder=""
-                  />
-                </div>
-                <div class="error-box hidden"></div>
-                  <button
-                    type="submit"
-                    id="add-address-delivery-send-btn"
-                    class="text-white text-left bg-primary_dark hover:bg-primary text-base font-semibold py-2 px-5 mt-4 mb-2 text-nowrap"
-                  >
-                    ZAPISZ ADRES
-                  </button>
-                  <button
-                    type="button"
-                    id="add-address-delivery-cancel-btn"
-                    class="text-left bg-white dark:bg-background_dark border border-[#ccc] hover:text-gray-500 dark:hover:text-gray-200 text-base font-semibold py-2 px-5 text-nowrap"
-                  >
-                    ANULUJ
-                  </button>
-                  <div
-                    id="server-response-add-address-delivery"
-                    class="p-2 text-sm text-[#a50000]"
-                  ></div>
-                </form>
-                </div>
-            <div class="address-box">
-              <div id="user-address-full-name" class="font-bold pb-2"></div>
-              <div id="user-address-street">Bąków Górny 42</div>
-              <div id="user-address-post">Zduny, 99-440, PL</div>
-              <div id="user-address-telephone"></div>
-              <div class="flex mt-2">
-                <div
-                  class="w-min mb-3 mr-3 text-sm font-bold underline tracking-wide cursor-pointer text-primary hover:text-white hover:bg-primary hover:no-underline transition-all"
-                >
-                  Edytuj
-                </div>
-                <div
-                  class="w-min mb-3 mr-3 text-sm font-bold underline tracking-wide cursor-pointer text-primary hover:text-white hover:bg-primary hover:no-underline transition-all"
-                >
-                  Usuń
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         <div
           id="personal-data"
-          class="acc-content flex flex-col h-min w-[75%] min-w-[350px] p-5 bg-white dark:bg-background_dark"
+          class="acc-content flex flex-col h-min w-[100%] lg:w-[75%] min-w-[350px] p-5 bg-white dark:bg-background_dark"
         >
        
           <div class="font-bold text-2xl">MOJE DANE</div>
@@ -246,7 +111,7 @@
             </div>
             <div
               id="edit-personal-data-modal"
-              class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full sm:w-[50vw] max-h-[90vh] bg-white dark:bg-background_dark px-10 py-5 hidden overflow-auto z-20"
+              class="modal hidden"
             >
               <form id="edit-personal-data-form" class="flex flex-col">
                 <div class="font-bold text-2xl mb-4">EDYTUJ SWOJE DANE</div>
@@ -388,7 +253,7 @@
             </div>
             <div
               id="edit-email-modal"
-              class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full sm:w-[50vw] max-h-[90vh] bg-white dark:bg-background_dark px-10 py-5 hidden overflow-auto z-20"
+              class="modal hidden"
             >
               <form id="edit-email-form" class="flex flex-col">
                 <div class="font-bold text-2xl mb-4">EDYTUJ ADRES E-MAIL</div>
@@ -434,7 +299,7 @@
             </div>
             <div
               id="edit-password-modal"
-              class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full sm:w-[50vw] max-h-[90vh] bg-white dark:bg-background_dark px-10 py-5 hidden overflow-auto z-20"
+              class="modal hidden"
             >
               <form id="edit-password-form" class="flex flex-col">
                 <div class="font-bold text-2xl mb-4">EDYTUJ SWOJE HASŁO</div>
@@ -501,7 +366,7 @@
             </div>
             <div
               id="edit-telephone-modal"
-              class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full sm:w-[50vw] max-h-[90vh] bg-white dark:bg-background_dark px-10 py-5 hidden overflow-auto z-20"
+              class="modal hidden"
             >
               <form id="edit-telephone-form" class="flex flex-col">
                 <div class="font-bold text-2xl mb-4">EDYTUJ SWÓJ NUMER TELEFONU</div>

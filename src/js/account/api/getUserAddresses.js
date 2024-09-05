@@ -1,4 +1,4 @@
-export async function getUserAddresses(userId) {
+export async function getUserAddresses() {
   try {
     const response = await fetch('http://localhost:3000/user/getaddresses', {
       method: 'GET',

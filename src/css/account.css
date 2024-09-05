@@ -10,6 +10,10 @@
   overflow: hidden;
 }
 
+.address-box.active {
+  border: 1px solid black;
+}
+
 .address-box:hover {
   border: 1px solid black;
 }

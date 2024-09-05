@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.modal {
+  @apply fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full sm:w-[50vw] max-h-[90vh] bg-white dark:bg-background_dark px-10 py-5 overflow-auto z-20;
+}
+
+/* .modal {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 100%;
+  max-height: 90vh;
+  background-color: white;
+  padding: 20px 40px;
+  display: none;
+  position: fixed;
+  overflow: auto;
+  z-index: 25;
+} */
+
+/* 
+body.dark .modal {
+  background-color: #222222;
+}
+
+@media (min-width: 640px) {
+  .modal {
+    width: 50vw;
+  }
+} */

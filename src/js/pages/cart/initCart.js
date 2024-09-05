@@ -5,13 +5,23 @@ import { getCart } from '../../cart/getCart'
 import { createCartItem } from '../../cart/createCartItem'
 import { loadHeader } from '../../components/header'
 import { loadFooter } from '../../components/footer'
+import { isAuthenticated } from '../../utils/auth'
 
 document.addEventListener('DOMContentLoaded', async () => {
   await loadHeader()
   loadFooter()
 
+  let cartType = null
+
+  if (isAuthenticated()) {
+    cartType = 'database'
+  } else {
+    cartType = 'cookies'
+  }
+
   try {
-    const dataCart = await getCart()
+    const dataCart = await getCart(cartType)
+
     if (
       dataCart &&
       Array.isArray(dataCart.CartItems) &&
@@ -28,7 +38,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.warn('cart is empty', dataCart)
       emptyCart()
     }
-    console.log('AAAl', dataCart)
 
     initializeCart()
 

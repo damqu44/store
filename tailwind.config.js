@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx,html}'],
+  purge: ['./src/**/*.{js,jsx,ts,tsx,html,css}'],
   darkMode: 'selector',
   theme: {
     extend: {
@@ -14,5 +14,9 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [require('@tailwindcss/aspect-ratio')],
+  plugins: [
+    require('tailwindcss'),
+    require('autoprefixer'),
+    require('@tailwindcss/aspect-ratio'),
+  ],
 }

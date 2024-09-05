@@ -1,8 +1,8 @@
 import { updateProductValue } from './initializeCart'
 import { updateCartCount } from '../components/header'
 import { emptyCart } from '../pages/cart/initCart'
-export function handleRemoveFromCart(productId) {
-  fetch(`http://localhost:3000/cart/${productId}`, {
+export function handleRemoveFromCart(productId, cartType) {
+  fetch(`http://localhost:3000/cart/${cartType}/${productId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

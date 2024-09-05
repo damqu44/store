@@ -6,8 +6,16 @@ export async function loadHeader() {
   const app = document.getElementById('app')
   const header = document.createElement('div')
   let dataCart = []
+  let cartType = null
+
+  if (isAuthenticated()) {
+    cartType = 'database'
+  } else {
+    cartType = 'cookies'
+  }
+
   try {
-    dataCart = await getCart()
+    dataCart = await getCart(cartType)
 
     if (
       (!dataCart && !Array.isArray(dataCart.CartItems)) ||

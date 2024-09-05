@@ -1,6 +1,6 @@
-export async function getCart() {
+export async function getCart(cartType) {
   try {
-    const response = await fetch('http://localhost:3000/cart', {
+    const response = await fetch(`http://localhost:3000/cart/${cartType}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

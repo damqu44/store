@@ -1,6 +1,15 @@
 import { handleAddToCart } from '../cart/handleAddToCart'
+import { isAuthenticated } from '../utils/auth'
 import { createQuantityButtons } from './createQuantityButtons'
 export function displayProductDetails(product) {
+  let cartType = null
+
+  if (isAuthenticated()) {
+    cartType = 'database'
+  } else {
+    cartType = 'cookies'
+  }
+
   const productDetails = document.getElementById('product-details')
   productDetails.innerHTML = `
       <div class="bg-white dark:bg-background_dark py-10 px-16 w-full">
@@ -121,7 +130,8 @@ export function displayProductDetails(product) {
         Id: product.Id,
         Amount: amount,
       },
-      false
+      false,
+      cartType
     )
   })
 

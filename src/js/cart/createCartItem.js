@@ -1,7 +1,16 @@
 import { createQuantityButtons } from '../product/createQuantityButtons'
+import { isAuthenticated } from '../utils/auth'
 import { handleRemoveFromCart } from './handleRemoveFromCart'
 
 export function createCartItem(product) {
+  let cartType = null
+
+  if (isAuthenticated()) {
+    cartType = 'database'
+  } else {
+    cartType = 'cookies'
+  }
+
   const cartContent = document.getElementById('cart-content')
   const cartItemContainer = document.createElement('div')
   cartItemContainer.id = `cart-item-${product.Id}`
@@ -10,8 +19,6 @@ export function createCartItem(product) {
     (cheapest, method) => (method.Price < cheapest.Price ? method : cheapest),
     product.deliveryMethods[0]
   )
-
-  console.log(product)
 
   const price = parseFloat(product.Price).toFixed(2)
   const priceParts = price.split('.')
@@ -63,9 +70,9 @@ export function createCartItem(product) {
     `
   const deleteButton = cartItemContainer.querySelector('#delete-button')
   deleteButton.addEventListener('click', () => {
-    handleRemoveFromCart(product.Id)
+    handleRemoveFromCart(product.Id, cartType)
   })
 
   cartContent.appendChild(cartItemContainer)
-  createQuantityButtons(product, true)
+  createQuantityButtons(product, true, cartType)
 }
