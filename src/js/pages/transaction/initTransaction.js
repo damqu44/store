@@ -9,6 +9,8 @@ import { displayUserDetails } from '../../transaction/displayUserDetails'
 import { isAuthenticated } from '../../utils/auth'
 import { displayInvoiceDetails } from '../../transaction/displayInvoiceDetails'
 import { getUserInfo } from '../../account/api/getUserInfo'
+import { displayComment } from '../../transaction/displayComment'
+import { displayDiscount } from '../../transaction/displayDiscount'
 
 document.addEventListener('DOMContentLoaded', async () => {
   await loadHeader()
@@ -23,6 +25,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   await displayDeliveryMethods()
   await displayUserDetails(user)
   displayInvoiceDetails(user)
+  displayComment()
+  displayDiscount()
 
   const searchForm = document.getElementById('search-form')
   searchForm.addEventListener('submit', handleSearch)
