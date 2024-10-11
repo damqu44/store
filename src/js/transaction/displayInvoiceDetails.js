@@ -141,7 +141,6 @@ export function displayInvoiceDetails(user) {
       document.getElementById(
         'invoice-full-name-set'
       ).innerHTML = `${user.Name} ${user.LastName}`
-      console.log(document.getElementById('invoice-full-name-set'))
     }
 
     if (user.Telephone) {

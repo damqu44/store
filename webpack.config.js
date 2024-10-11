@@ -13,6 +13,7 @@ module.exports = {
     login: './src/js/pages/login/initLogin.js',
     account: './src/js/pages/account/initAccount.js',
     transaction: './src/js/pages/transaction/initTransaction.js',
+    orders: './src/js/pages/orders/initOrders.js',
   },
   output: {
     filename: '[name].bundle.js',
@@ -96,6 +97,12 @@ module.exports = {
       filename: 'transaction.html',
       template: './src/pages/transaction.html',
       chunks: ['transaction'],
+    }),
+    new HtmlWebpackPlugin({
+      title: 'orders',
+      filename: 'orders.html',
+      template: './src/pages/orders.html',
+      chunks: ['orders'],
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',

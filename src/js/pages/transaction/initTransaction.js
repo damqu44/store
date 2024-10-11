@@ -11,6 +11,8 @@ import { displayInvoiceDetails } from '../../transaction/displayInvoiceDetails'
 import { getUserInfo } from '../../account/api/getUserInfo'
 import { displayComment } from '../../transaction/displayComment'
 import { displayDiscount } from '../../transaction/displayDiscount'
+import getTransactionData from '../../transaction/getTransactionData'
+import managePaymentMethods from '../../transaction/managePaymentMethods'
 
 document.addEventListener('DOMContentLoaded', async () => {
   await loadHeader()
@@ -25,8 +27,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   await displayDeliveryMethods()
   await displayUserDetails(user)
   displayInvoiceDetails(user)
+  managePaymentMethods()
   displayComment()
   displayDiscount()
+
+  const transactionPayBtn = document.getElementById(
+    'delivery-transaction-pay-btn'
+  )
+  transactionPayBtn.addEventListener('click', async () => {
+    await getTransactionData()
+  })
 
   const searchForm = document.getElementById('search-form')
   searchForm.addEventListener('submit', handleSearch)

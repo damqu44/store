@@ -1,6 +1,5 @@
 import { getUserAddressbyId } from '../account/api/getUserAddressbyId'
 import { getUserAddresses } from '../account/api/getUserAddresses'
-import { getUserInfo } from '../account/api/getUserInfo'
 import { displayAddresses } from '../account/displayAddresses'
 import { hideModal, showModal } from '../account/modal'
 import '../../css/account.css'
@@ -36,6 +35,11 @@ function updateUserDetails() {
     userStreet.innerText = primaryAdress.Street
     userPost.innerText = `${primaryAdress.City}, ${primaryAdress.ZipCode}, PL`
     userTelephone.innerText = `+48 ${primaryAdress.Telephone}`
+
+    const selectedAddressDeliveryField = document.getElementById(
+      'selected-delivery-address-field'
+    )
+    selectedAddressDeliveryField.setAttribute('data-id', primaryAdress.Id)
   }
 }
 
@@ -116,6 +120,9 @@ function handleAddressFormSubmit() {
 }
 
 function updateUserDetailsFromActiveBox(activeAddressBox) {
+  const selectedAddressDeliveryField = document.getElementById(
+    'selected-delivery-address-field'
+  )
   const userFullNameField = document.getElementById('user-full-name')
   const userStreet = document.getElementById('user-street')
   const userPost = document.getElementById('user-post')
@@ -132,6 +139,15 @@ function updateUserDetailsFromActiveBox(activeAddressBox) {
   userTelephone.innerText = activeAddressBox.querySelector(
     '#user-address-telephone'
   ).innerHTML
+
+  const selectedAddressDeliveryId = document.querySelector(
+    '.address-box.active'
+  ).dataset.id
+
+  selectedAddressDeliveryField.setAttribute(
+    'data-id',
+    selectedAddressDeliveryId
+  )
 }
 
 function displayAddressSelectionError() {

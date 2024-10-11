@@ -40,7 +40,7 @@
               </div>
               <div class="border border-b-0 border-x-0 border-[#ccc]"></div>
               <div class="flex flex-col p-5">
-                <div class="flex flex-col">
+                <div id="selected-delivery-address-field" class="flex flex-col">
                   <div id="user-full-name"></div>
                   <div id="user-street"></div>
                   <div id="user-post"></div>
@@ -48,9 +48,13 @@
                 </div>
                 <div
                   id="show-addresses-delivery-btn"
-                  class="tracking-wider cursor-pointer text-primary_dark hover:text-primary mt-2 mb-5"
+                  class="tracking-wider cursor-pointer text-primary_dark hover:text-primary mt-2"
                 ></div>
-                <div class="text-base font-semibold">
+                <div
+                  id="error-response-address-delivery"
+                  class="p-2 text-sm text-[#a50000]"
+                ></div>
+                <div class="text-base font-semibold mt-3">
                   Potrzebujesz faktury do zamówienia?
                 </div>
                 <div class="flex my-2">
@@ -75,6 +79,10 @@
                   >
                     ZMIEŃ DANE
                   </div>
+                  <div
+                    id="error-response-invoice"
+                    class="p-2 text-sm text-[#a50000]"
+                  ></div>
                 </div>
               </div>
             </div>
@@ -90,7 +98,11 @@
                 ></div>
                 <div class="font-semibold mt-8">Dostawa</div>
                 <div id="delivery-methods" class="mt-3"></div>
-                <div class="flex text-sm mt-4">
+                <div
+                  id="error-response-delivery-method"
+                  class="p-2 text-sm text-[#a50000]"
+                ></div>
+                <div class="flex text-sm mt-1">
                   <div>Uwagi do zakupu</div>
                   <div class="text-gray-400 ml-1">(opcjonalnie)</div>
                 </div>
@@ -111,7 +123,8 @@
               <div class="border border-b-0 border-x-0 border-[#ccc]"></div>
               <div class="my-5 flex flex-col">
                 <div
-                  class="w-[290px] flex justify-start items-center border-2 border-primary hover:border-black cursor-pointer mx-4 my-1 py-2 px-4 transition-colors"
+                  id="card"
+                  class="payment-method w-[290px] flex justify-start items-center border border-[#ccc] hover:border-black cursor-pointer mx-4 my-1 py-2 px-4 transition-colors"
                 >
                   <div class="w-[45px] mr-3 flex justify-center items-center">
                     <i
@@ -121,7 +134,8 @@
                   <div class="text-sm">Karta płatnicza</div>
                 </div>
                 <div
-                  class="w-[290px] h-[40px] flex justify-start items-center border border-[#ccc] hover:border-black cursor-pointer mx-4 my-1 py-2 px-4 transition-colors"
+                  id="blik"
+                  class="payment-method w-[290px] h-[40px] flex justify-start items-center border border-[#ccc] hover:border-black cursor-pointer mx-4 my-1 py-2 px-4 transition-colors"
                 >
                   <div class="w-[45px] mr-3 flex justify-center items-center">
                     <img
@@ -132,7 +146,8 @@
                   <div class="text-sm">BLIK</div>
                 </div>
                 <div
-                  class="w-[290px] flex justify-start items-center border border-[#ccc] hover:border-black cursor-pointer mx-4 my-1 py-2 px-4 transition-colors"
+                  id="transfer"
+                  class="payment-method w-[290px] flex justify-start items-center border border-[#ccc] hover:border-black cursor-pointer mx-4 mt-1 py-2 px-4 transition-colors"
                 >
                   <div class="w-[45px] mr-3 flex justify-center items-center">
                     <i
@@ -142,6 +157,10 @@
                   <div class="text-sm">Przelew</div>
                 </div>
               </div>
+              <div
+                id="error-response-payment-method"
+                class="p-2 text-sm text-[#a50000]"
+              ></div>
             </div>
             <div class="flex flex-col bg-white dark:bg-[#222222]">
               <div class="text-lg font-semibold p-5">Twoje zniżki</div>
@@ -187,10 +206,15 @@
                 ></div>
               </div>
               <div
-                class="w-full bg-primary hover:bg-primary_dark cursor-pointer text-center my-3 p-2 text-md tracking-widest text-white"
+                id="delivery-transaction-pay-btn"
+                class="w-full bg-primary hover:bg-primary_dark cursor-pointer text-center mt-2 p-2 text-md tracking-widest text-white"
               >
                 PŁACĘ
               </div>
+              <div
+                id="error-response-cart-summary"
+                class="p-2 text-sm text-[#a50000]"
+              ></div>
             </div>
           </div>
         </div>

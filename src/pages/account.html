@@ -15,16 +15,16 @@
       class="w-full h-full min-h-screen flex flex-col justify-start items-center bg-background_light dark:bg-black text-black dark:text-white"
     >
       <div
-        class="flex w-full justify-center items-center bg-white dark:bg-background_dark border border-x-0 border-b-0 border-[#ccc] dark:border-[#4d4d4d]"
+        class="flex w-full justify-center items-start bg-white dark:bg-background_dark border border-x-0 border-b-0 border-[#ccc] dark:border-[#4d4d4d]"
       >
         <div
           class="w-full justify-center items-center flex flex-col max-w-[700px] mx-5"
         >
           <div id="welcome-text" class="w-full text-2xl font-bold pt-8">
-            CZEŚĆ DAMIAN
           </div>
           <div class="flex w-full justify-center items-center">
             <div
+              onclick="(() => {location.href = '/orders.html'})()"
               class="p-2 cursor-pointer transition-all mr-2 text-base font-light border-4 border-x-0 border-t-0 border-transparent hover:border-primary"
             >
               Zamówienia
