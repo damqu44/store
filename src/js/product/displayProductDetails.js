@@ -12,16 +12,17 @@ export function displayProductDetails(product) {
 
   const productDetails = document.getElementById('product-details')
   productDetails.innerHTML = `
-      <div class="bg-white dark:bg-background_dark py-10 px-16 w-full">
-        <div class="aspect-w-4 aspect-h-3">
+      <div class="bg-white dark:bg-background_dark items-center justify-center flex w-full h-[320px]">
+        <div class="w-[60%] h-[85%] relative bg-gray-900 ">
           <img
             src="${product.ImageLink}"
             alt="${product.Name || 'No image available'}"
-            class="object-cover rounded-sm"
-          />
+            class="rounded-sm absolute inset-0 w-full h-full object-cover " 
+          /> 
         </div>
       </div>
-      <div class="bg-white dark:bg-background_dark py-10 px-16 w-full mt-5 text-base">
+
+      <div class="bg-white dark:bg-background_dark py-10 px-20 w-full mt-5 text-sm">
           ${product.Description || 'No description available'}
         </div>
       `

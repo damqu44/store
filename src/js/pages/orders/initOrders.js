@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const user = await getUserInfo()
 
+  document.getElementById('welcome-text').textContent = `Cześć ${user.Name}`
+
   const orders = await getOrders()
   const ordersSection = document.getElementById('orders-section')
 
@@ -71,6 +73,19 @@ document.addEventListener('DOMContentLoaded', async () => {
       `
     })
 
+    let orderStatus = ''
+    if (order.IsPaid === false) {
+      orderStatus = 'Nieopłacone'
+    } else if (order.Status === 'PENDING') {
+      orderStatus = 'W realizacji'
+    } else if (order.Status === 'SHIPPED') {
+      orderStatus = 'W trakcie dostawy'
+    } else if (order.Status === 'DELIVERED') {
+      orderStatus = 'Dostarczone'
+    } else if (order.Status === 'CANCELLED') {
+      orderStatus = 'Anulowane'
+    }
+
     orderDiv.innerHTML = `
     <div class="flex w-full">
       <div class="text-lg font-bold mb-1">${convertDate(
@@ -82,10 +97,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     <div class="mt-2 w-full">
         ${orderItemsHtml}
     </div>
-    <div class="pl-2 font-medium">${
+    <div class="pl-2">
+      Status zamówienia: <span class="font-medium">${orderStatus}</span>
+    </div>
+    <div class="pl-2 ">${
       order.IsPaid
         ? ''
-        : 'Zamówienie nie jest opłacone, kliknij tutaj by dokonać płatności'
+        : 'Zamówienie <span class="text-red-600">nie jest</span> opłacone, <a class="font-medium underline" href="./error.html">kliknij tutaj</a> by dokonać płatności.'
     }</div>
     `
     ordersSection.appendChild(orderDiv)
