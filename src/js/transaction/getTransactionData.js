@@ -27,8 +27,6 @@ export default async function getTransactionData() {
     discount: discount,
   }
 
-  console.log(transactionData)
-
   await validateData()
 
   async function validateData() {
@@ -45,6 +43,7 @@ export default async function getTransactionData() {
     } else {
       document.getElementById('error-response-cart-summary').innerHTML = ''
       await getTransaction(transactionData)
+      location.href = '/orders.html'
     }
   }
 }

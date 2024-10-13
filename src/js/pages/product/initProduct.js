@@ -1,5 +1,4 @@
 import '../../../index.css'
-import _ from 'lodash'
 
 import { fetchProductById } from '../../product/fetchProductById'
 import { handleSearch } from '../../search/handleSearch'

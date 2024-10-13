@@ -28,35 +28,47 @@ export function displayProductDetails(product) {
       `
 
   const productMenu = document.getElementById('product-menu')
+
   let cheapestDeliveryMethod
+
   if (product.DeliveryMethods && product.DeliveryMethods.length > 0) {
     cheapestDeliveryMethod = product.DeliveryMethods.reduce((prev, current) => {
-      return prev.Price < current.Price ? prev : current
+      return parseFloat(prev.Price) < parseFloat(current.Price) ? prev : current
     })
+
+    cheapestDeliveryMethod.Price = parseFloat(
+      cheapestDeliveryMethod.Price
+    ).toFixed(2)
   } else {
     cheapestDeliveryMethod = { Price: 'N/A' }
   }
 
   productMenu.innerHTML = `
+        <div class="w-full px-10 py-2 bg-gray-400 text-red-600 font-bold text-base">
+          OFERTA NIEDOSTĘPNA
+        </div>
         <div class="flex flex-col bg-white dark:bg-background_dark  p-10">
-          <div class="pb-5 line-clamp-2 text-4xl">
+          <div class="pb-5 line-clamp-2  hover:line-clamp-3 text-xl">
             ${product.Name || 'Unnamed Product'}
           </div>
-          <div class="text-2xl line-clamp-1">
+          <div class="text-xl line-clamp-1">
             ${product.Price || 'Price not available'} zł
           </div>
           <div class="border border-[#6d6d6d] border-x-0 border-t-0 border-b my-5"></div>
           <div class="flex flex-col">
-            <label for="amount" class="pb-1 text-sm">Liczba sztuk</label>
-            <div id="quantity-container-${
-              product.Id
-            }" class="pb-2 flex flex-row"></div>
-            <button id="add-to-cart" class="text-white bg-primary text-xs sm:text-sm md:text-base py-2 text-nowrap">DODAJ DO KOSZYKA</button>
+            <div class="flex">
+              <label for="amount" class="pb-1 text-sm">Liczba sztuk</label>
+              <div id="quantity-container-${
+                product.Id
+              }" class="pb-2 flex flex-row"></div>
+            </div>
+              <button id="add-to-cart" class="text-white bg-primary text-xs sm:text-sm md:text-base py-2 text-nowrap">DODAJ DO KOSZYKA</button>
+            
           </div>
         </div>
         <div class="w-full bg-white dark:bg-background_dark p-10 mt-5">
-          <div class="w-full relative cursor-pointer group"> 
-            <div id="open-delivery-options-button" class="text-sm">
+          <div  id="open-delivery-options-button" class="w-full relative cursor-pointer group"> 
+            <div class="text-sm">
               <i class="fa-solid fa-truck mr-3"></i>Dostawa od ${
                 cheapestDeliveryMethod.Price
               } zł
@@ -136,6 +148,10 @@ export function displayProductDetails(product) {
     )
   })
 
+  toggleDeliveryOptions()
+}
+
+function toggleDeliveryOptions() {
   const closeDeliveryButton = document.getElementById(
     'close-delivery-options-button'
   )
@@ -149,19 +165,21 @@ export function displayProductDetails(product) {
 
   closeDeliveryButton.addEventListener('click', () => {
     deliveryOptions.classList.remove('translate-x-0')
+    deliveryOptions.classList.add('translate-x-full')
 
     setTimeout(() => {
       document.body.style.overflow = 'auto'
       deliveryOptionsBackground.classList.add('invisible')
-    }, 600)
+    }, 100)
   })
 
   openDeliveryOptionsButton.addEventListener('click', () => {
     deliveryOptionsBackground.classList.remove('invisible')
+    document.body.style.overflow = 'hidden'
 
     setTimeout(() => {
-      document.body.style.overflow = 'hidden'
+      deliveryOptions.classList.remove('translate-x-full')
       deliveryOptions.classList.add('translate-x-0')
-    }, 10)
+    }, 100)
   })
 }

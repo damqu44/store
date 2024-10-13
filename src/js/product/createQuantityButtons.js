@@ -6,16 +6,40 @@ export function createQuantityButtons(product, isUpdate, cartType) {
   )
 
   const cartInfo = product.cartInfo || {}
-  const quantityValue = cartInfo.Amount ? cartInfo.Amount : 1
+
+  const isProductAvailable = product.Quantity > 0
+  let quantityValue
+
+  if (isProductAvailable && cartInfo.Amount > 0) {
+    quantityValue = cartInfo.Amount
+  } else if (isProductAvailable && !cartInfo.Amount > 0) {
+    quantityValue = 1
+  } else {
+    quantityValue = 0
+  }
+
+  const notAvailableClass = isProductAvailable
+    ? ''
+    : 'cursor-default bg-gray-100'
 
   quantityContainer.innerHTML = `
-    <button class="increment-button w-[35px] h-[35px] flex justify-center items-center border border-[#6d6d6d] outline-none">+</button>
-      <input type="number" id="quantity-input-${product.Id}" name="amount" value="${quantityValue}" min="1" max="${product.Quantity}" class="cart-item-amount w-[70px] h-[35px] bg-transparent border border-[#6d6d6d] outline-none text-center appearance-none m-0 no-arrows">
-    <button class="decrement-button w-[35px] h-[35px] flex justify-center items-center border border-[#6d6d6d] outline-none">-</button>
+    <button class="increment-button w-[35px] h-[35px] flex justify-center items-center border border-[#6d6d6d] outline-none ${notAvailableClass}">+</button>
+      <input type="number" id="quantity-input-${product.Id}" name="amount" value="${quantityValue}" min="1" max="${product.Quantity}" class="${notAvailableClass} cart-item-amount w-[70px] h-[35px] bg-transparent border border-[#6d6d6d] outline-none text-center appearance-none m-0 no-arrows">
+    <button class="decrement-button w-[35px] h-[35px] flex justify-center items-center border border-[#6d6d6d] outline-none ${notAvailableClass}">-</button>
   `
   const quantityInput = quantityContainer.querySelector(
     `#quantity-input-${product.Id}`
   )
+  const cartButton = document.getElementById('add-to-cart')
+
+  if (!isProductAvailable) {
+    quantityInput.disabled = true
+    cartButton.disabled = true
+  } else {
+    quantityInput.disabled = false
+    cartButton.disabled = false
+  }
+
   const incrementButton = quantityContainer.querySelector('.increment-button')
   const decrementButton = quantityContainer.querySelector('.decrement-button')
 

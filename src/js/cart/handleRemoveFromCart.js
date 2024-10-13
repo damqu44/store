@@ -16,7 +16,6 @@ export function handleRemoveFromCart(productId, cartType) {
       return response.json()
     })
     .then((data) => {
-      console.log('Success:', data)
       updateCartCount(data.cartData)
       const cartItem = document.getElementById(`cart-item-${productId}`)
       if (cartItem) {

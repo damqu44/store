@@ -3,7 +3,7 @@ import '../../../css/radioInput.css'
 
 import { loadHeader } from '../../components/header'
 import { loadFooter } from '../../components/footer'
-import { isAuthenticated } from '../../utils/auth'
+import { checkAuth, isAuthenticated } from '../../utils/auth'
 import { getUserInfo } from '../../account/api/getUserInfo'
 import { handleSearch } from '../../search/handleSearch'
 import { getOrders } from '../../order/api/getOrders'
@@ -13,9 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadHeader()
   loadFooter()
 
-  if (!isAuthenticated()) {
-    window.location.href = '/login.html'
-  }
+  checkAuth()
 
   const user = await getUserInfo()
 
@@ -41,7 +39,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   orders.forEach((order) => {
-    console.log(order)
     const orderDiv = document.createElement('div')
     orderDiv.classList.add(
       'p-4',
