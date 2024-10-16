@@ -1,38 +1,40 @@
-import { createQuantityButtons } from '../product/createQuantityButtons'
-import { isAuthenticated } from '../utils/auth'
-import { handleRemoveFromCart } from './handleRemoveFromCart'
+import { createQuantityButtons } from "../product/createQuantityButtons"
+import { isAuthenticated } from "../utils/auth"
+import { handleRemoveFromCart } from "./handleRemoveFromCart"
 
 export function createCartItem(product) {
   let cartType = null
 
   if (isAuthenticated()) {
-    cartType = 'database'
+    cartType = "database"
   } else {
-    cartType = 'cookies'
+    cartType = "cookies"
   }
 
-  const cartContent = document.getElementById('cart-content')
-  const cartItemContainer = document.createElement('div')
+  const cartContent = document.getElementById("cart-content")
+  const cartItemContainer = document.createElement("div")
   cartItemContainer.id = `cart-item-${product.Id}`
 
   const cheapestDeliveryMethod = product.deliveryMethods.reduce(
     (cheapest, method) => (method.Price < cheapest.Price ? method : cheapest),
     product.deliveryMethods[0]
   )
+  const firstImage =
+    product.Images && product.Images.length > 0 ? product.Images[0].Url : ""
 
   const price = parseFloat(product.Price).toFixed(2)
-  const priceParts = price.split('.')
+  const priceParts = price.split(".")
   const price1 = priceParts[0]
   const price2 = priceParts[1]
   cartItemContainer.classList.add(
-    'flex',
-    'flex-col',
-    'lg:flex-row',
-    'p-5',
-    'mb-4',
-    'bg-white',
-    'dark:bg-[#222222]',
-    'cart-item'
+    "flex",
+    "flex-col",
+    "lg:flex-row",
+    "p-5",
+    "mb-4",
+    "bg-white",
+    "dark:bg-[#222222]",
+    "cart-item"
   )
   cartItemContainer.innerHTML = `
         <div class="flex w-full lg:w-[55%]">
@@ -40,7 +42,7 @@ export function createCartItem(product) {
             <a href='/product.html?id=${product.Id}'>
                 <img
                     class="w-full h-full object-cover rounded-md"
-                    src="${product.ImageLink}"
+                    src="${firstImage}"
                 />
             </a>  
           </div>
@@ -68,8 +70,8 @@ export function createCartItem(product) {
           </div>
         </div>
     `
-  const deleteButton = cartItemContainer.querySelector('#delete-button')
-  deleteButton.addEventListener('click', () => {
+  const deleteButton = cartItemContainer.querySelector("#delete-button")
+  deleteButton.addEventListener("click", () => {
     handleRemoveFromCart(product.Id, cartType)
   })
 

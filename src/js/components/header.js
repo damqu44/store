@@ -1,17 +1,17 @@
-import $ from 'jquery'
-import { isAuthenticated } from '../utils/auth'
-import { getCart } from '../cart/getCart'
+import $ from "jquery"
+import { isAuthenticated } from "../utils/auth"
+import { getCart } from "../cart/getCart"
 
 export async function loadHeader() {
-  const app = document.getElementById('app')
-  const header = document.createElement('div')
+  const app = document.getElementById("app")
+  const header = document.createElement("div")
   let dataCart = []
   let cartType = null
 
   if (isAuthenticated()) {
-    cartType = 'database'
+    cartType = "database"
   } else {
-    cartType = 'cookies'
+    cartType = "cookies"
   }
 
   try {
@@ -21,27 +21,27 @@ export async function loadHeader() {
       (!dataCart && !Array.isArray(dataCart.CartItems)) ||
       !Array.isArray(dataCart)
     ) {
-      console.warn('cart is empty', dataCart)
+      console.warn("cart is empty", dataCart)
     }
   } catch (error) {
-    console.error('Error loading cart data:', error)
+    console.error("Error loading cart data:", error)
   }
 
   header.classList.add(
-    'w-full',
-    'px-10',
-    'py-3',
-    'flex',
-    'justify-between',
-    'bg-white',
-    'dark:bg-[#222222]'
+    "w-full",
+    "px-10",
+    "py-3",
+    "flex",
+    "justify-between",
+    "bg-white",
+    "dark:bg-[#222222]"
   )
 
   const authStatus = isAuthenticated()
 
   header.innerHTML = `
       <div class="font-mono text-2xl text-primary">
-        <a href="/">chow chow</a>
+        <a href="/">Maître d'outils</a>
       </div>
       <div class="hidden sm:flex w-[25%]">
         <form id="search-form" class="w-full flex justify-center items-center">
@@ -71,43 +71,43 @@ export async function loadHeader() {
 
   updateCartCount(dataCart)
 
-  const accountButton = document.getElementById('account-button')
-  accountButton.addEventListener('click', () => {
+  const accountButton = document.getElementById("account-button")
+  accountButton.addEventListener("click", () => {
     if (authStatus) {
-      window.location.href = '/account.html'
+      window.location.href = "/account.html"
     } else {
-      window.location.href = '/login.html'
+      window.location.href = "/login.html"
     }
   })
 
   $(function () {
-    if (localStorage.getItem('theme') === 'dark') {
-      $('body').addClass('dark')
+    if (localStorage.getItem("theme") === "dark") {
+      $("body").addClass("dark")
     }
 
-    $('#dark-mode-button').on('click', function () {
-      $('body').toggleClass('dark')
-      const isDarkMode = $('body').hasClass('dark')
-      localStorage.setItem('theme', isDarkMode ? 'dark' : 'light')
+    $("#dark-mode-button").on("click", function () {
+      $("body").toggleClass("dark")
+      const isDarkMode = $("body").hasClass("dark")
+      localStorage.setItem("theme", isDarkMode ? "dark" : "light")
     })
   })
 }
 
 export function updateCartCount(cartItems) {
-  const cartCountElement = document.getElementById('cart-count')
+  const cartCountElement = document.getElementById("cart-count")
   if (cartCountElement) {
     const totalItems = cartItems.reduce(
       (sum, item) => sum + item.cartInfo.Amount,
       0
     )
     if (totalItems === 0 || isNaN(totalItems)) {
-      cartCountElement.classList.add('hidden')
+      cartCountElement.classList.add("hidden")
     } else {
       cartCountElement.textContent = totalItems
-      cartCountElement.classList.remove('hidden')
-      cartCountElement.classList.add('animate-pulse')
+      cartCountElement.classList.remove("hidden")
+      cartCountElement.classList.add("animate-pulse")
       setTimeout(() => {
-        cartCountElement.classList.remove('animate-pulse')
+        cartCountElement.classList.remove("animate-pulse")
       }, 2000)
     }
   }

@@ -1,33 +1,36 @@
-import { handleAddToCart } from '../cart/handleAddToCart'
-import { isAuthenticated } from '../utils/auth'
-import { createQuantityButtons } from './createQuantityButtons'
+import { handleAddToCart } from "../cart/handleAddToCart"
+import { isAuthenticated } from "../utils/auth"
+import { createQuantityButtons } from "./createQuantityButtons"
+
 export function displayProductDetails(product) {
   let cartType = null
 
   if (isAuthenticated()) {
-    cartType = 'database'
+    cartType = "database"
   } else {
-    cartType = 'cookies'
+    cartType = "cookies"
   }
 
-  const productDetails = document.getElementById('product-details')
+  const firstImage = product.Images.length > 0 ? product.Images[0].Url : ""
+
+  const productDetails = document.getElementById("product-details")
   productDetails.innerHTML = `
       <div class="bg-white dark:bg-background_dark items-center justify-center flex w-full h-[320px]">
-        <div class="w-[60%] h-[85%] relative bg-gray-900 ">
+        <div class="w-[60%] h-[85%] relative">
           <img
-            src="${product.ImageLink}"
-            alt="${product.Name || 'No image available'}"
+            src="${firstImage}"
+            alt="${product.Name || "No image available"}"
             class="rounded-sm absolute inset-0 w-full h-full object-cover " 
           /> 
         </div>
       </div>
 
       <div class="bg-white dark:bg-background_dark py-10 px-20 w-full mt-5 text-sm">
-          ${product.Description || 'No description available'}
+          ${product.Description || "No description available"}
         </div>
       `
 
-  const productMenu = document.getElementById('product-menu')
+  const productMenu = document.getElementById("product-menu")
 
   let cheapestDeliveryMethod
 
@@ -40,30 +43,32 @@ export function displayProductDetails(product) {
       cheapestDeliveryMethod.Price
     ).toFixed(2)
   } else {
-    cheapestDeliveryMethod = { Price: 'N/A' }
+    cheapestDeliveryMethod = { Price: "N/A" }
   }
 
+  const isProductAvailable = product.Quantity > 0
+
   productMenu.innerHTML = `
-        <div class="w-full px-10 py-2 bg-gray-400 text-red-600 font-bold text-base">
+        <div class="${isProductAvailable ? "hidden" : ""} w-full px-10 py-2 bg-gray-400 text-red-600 font-bold text-base">
           OFERTA NIEDOSTĘPNA
         </div>
         <div class="flex flex-col bg-white dark:bg-background_dark  p-10">
-          <div class="pb-5 line-clamp-2  hover:line-clamp-3 text-xl">
-            ${product.Name || 'Unnamed Product'}
+          <div class="pb-5 text-xl">
+            ${product.Name || "Unnamed Product"}
           </div>
           <div class="text-xl line-clamp-1">
-            ${product.Price || 'Price not available'} zł
+            ${parseFloat(product.Price).toFixed(2) || "Price not available"} zł
           </div>
           <div class="border border-[#6d6d6d] border-x-0 border-t-0 border-b my-5"></div>
           <div class="flex flex-col">
-            <div class="flex">
-              <label for="amount" class="pb-1 text-sm">Liczba sztuk</label>
+            <div class="flex justify-start items-center">
+              <label for="amount" class="pb-1 mr-3 text-sm">Liczba sztuk</label>
               <div id="quantity-container-${
                 product.Id
               }" class="pb-2 flex flex-row"></div>
+              <div class="ml-3 text-sm">z ${product.Quantity} szt.</div>
             </div>
               <button id="add-to-cart" class="text-white bg-primary text-xs sm:text-sm md:text-base py-2 text-nowrap">DODAJ DO KOSZYKA</button>
-            
           </div>
         </div>
         <div class="w-full bg-white dark:bg-background_dark p-10 mt-5">
@@ -99,7 +104,7 @@ export function displayProductDetails(product) {
                 <div class="w-full flex justify-between items-center text-base py-2 px-8 ">
                   <div>Paczkomat InPost</div>
                   <div>${product.DeliveryMethods.filter(
-                    (item) => item.Name === 'kurier dpd nextday'
+                    (item) => item.Name === "kurier dpd nextday"
                   ).map((item) => item.Price)} zł</div>
                 </div>
               </div>
@@ -113,14 +118,14 @@ export function displayProductDetails(product) {
                 <div class="w-full flex justify-between items-center text-base py-2 px-8 ">
                   <div>Kurier InPost</div>
                     <div>${product.DeliveryMethods.filter(
-                      (item) => item.Name === 'kurier dpd nextday'
+                      (item) => item.Name === "kurier dpd nextday"
                     ).map((item) => item.Price)} zł
                     </div>
                 </div>
                 <div class="w-full flex justify-between items-center text-base py-2 px-8 ">
                   <div>Kurier DPD NEXTDAY</div>
                     <div>${product.DeliveryMethods.filter(
-                      (item) => item.Name === 'kurier dpd nextday'
+                      (item) => item.Name === "kurier dpd nextday"
                     ).map((item) => item.Price)} zł
                     </div>
                 </div>
@@ -135,8 +140,8 @@ export function displayProductDetails(product) {
   createQuantityButtons(product, false)
 
   const quantityInput = document.getElementById(`quantity-input-${product.Id}`)
-  const cartButton = document.getElementById('add-to-cart')
-  cartButton.addEventListener('click', () => {
+  const cartButton = document.getElementById("add-to-cart")
+  cartButton.addEventListener("click", () => {
     const amount = parseInt(quantityInput.value, 10)
     handleAddToCart(
       {
@@ -153,33 +158,33 @@ export function displayProductDetails(product) {
 
 function toggleDeliveryOptions() {
   const closeDeliveryButton = document.getElementById(
-    'close-delivery-options-button'
+    "close-delivery-options-button"
   )
   const openDeliveryOptionsButton = document.getElementById(
-    'open-delivery-options-button'
+    "open-delivery-options-button"
   )
-  const deliveryOptions = document.getElementById('delivery-options')
+  const deliveryOptions = document.getElementById("delivery-options")
   const deliveryOptionsBackground = document.getElementById(
-    'delivery-options-background'
+    "delivery-options-background"
   )
 
-  closeDeliveryButton.addEventListener('click', () => {
-    deliveryOptions.classList.remove('translate-x-0')
-    deliveryOptions.classList.add('translate-x-full')
+  closeDeliveryButton.addEventListener("click", () => {
+    deliveryOptions.classList.remove("translate-x-0")
+    deliveryOptions.classList.add("translate-x-full")
 
     setTimeout(() => {
-      document.body.style.overflow = 'auto'
-      deliveryOptionsBackground.classList.add('invisible')
+      document.body.style.overflow = "auto"
+      deliveryOptionsBackground.classList.add("invisible")
     }, 100)
   })
 
-  openDeliveryOptionsButton.addEventListener('click', () => {
-    deliveryOptionsBackground.classList.remove('invisible')
-    document.body.style.overflow = 'hidden'
+  openDeliveryOptionsButton.addEventListener("click", () => {
+    deliveryOptionsBackground.classList.remove("invisible")
+    document.body.style.overflow = "hidden"
 
     setTimeout(() => {
-      deliveryOptions.classList.remove('translate-x-full')
-      deliveryOptions.classList.add('translate-x-0')
+      deliveryOptions.classList.remove("translate-x-full")
+      deliveryOptions.classList.add("translate-x-0")
     }, 100)
   })
 }

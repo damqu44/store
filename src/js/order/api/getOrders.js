@@ -1,4 +1,4 @@
-export async function getOrders(productData) {
+export async function getOrders() {
   const response = await fetch('http://localhost:3000/order', {
     method: 'GET',
     headers: {

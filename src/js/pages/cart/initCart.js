@@ -49,9 +49,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       sessionStorage.setItem('cartProducts', JSON.stringify(productData))
 
       const transactionButton = document.getElementById('transaction-button')
-      transactionButton.addEventListener('click', () => {
-        window.location.href = '/transaction.html'
-      })
+      if (transactionButton) {
+        transactionButton.addEventListener('click', () => {
+          window.location.href = '/transaction.html'
+        })
+      }
     }
   } catch (error) {
     console.error('Error loading cart data:', error)

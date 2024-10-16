@@ -1,34 +1,34 @@
-import { getProducts } from './api/getProducts'
+import { getProducts } from "./api/getProducts"
 
 export const displayDeliveryMethods = async () => {
-  const productDataString = sessionStorage.getItem('cartProducts')
+  const productDataString = sessionStorage.getItem("cartProducts")
   const productData = productDataString ? JSON.parse(productDataString) : []
 
   if (productData.length > 0) {
     try {
       const verifiedData = await getProducts(productData)
-
       const transactionProducts = document.getElementById(
-        'transaction-products'
+        "transaction-products"
       )
 
       const getProductLabel = (count) => {
         if (count === 1) {
-          return 'produkt'
+          return "produkt"
         } else if (count >= 2 && count <= 4) {
-          return 'produkty'
+          return "produkty"
         } else {
-          return 'produktów'
+          return "produktów"
         }
       }
 
       const productLabel = getProductLabel(verifiedData.length)
 
-      const transactionProductsAmount = document.createElement('div')
+      const transactionProductsAmount = document.createElement("div")
       transactionProductsAmount.innerHTML = `<div class="mb-3">${verifiedData.length} ${productLabel}</div>`
       transactionProducts.appendChild(transactionProductsAmount)
       verifiedData.forEach((product) => {
-        const transactionProduct = document.createElement('div')
+        const firstImage = product.ImageUrl ? product.ImageUrl : ""
+        const transactionProduct = document.createElement("div")
 
         transactionProduct.innerHTML = `
             <div
@@ -38,7 +38,7 @@ export const displayDeliveryMethods = async () => {
                   <a href="/product.html?id=${product.Id}">
                     <img
                       class="w-full h-full object-cover"
-                      src="${product.ImageLink}"
+                      src="${firstImage}"
                     />
                   </a>
                 </div>
@@ -66,30 +66,30 @@ export const displayDeliveryMethods = async () => {
       const freeDeliveryNeed = (150 - productsCost).toFixed(2)
 
       if (productsCost < 150) {
-        const freeDelivery = document.getElementById('free-delivery')
+        const freeDelivery = document.getElementById("free-delivery")
         freeDelivery.innerHTML = `Brakuje ${freeDeliveryNeed} zł do darmowej dostawy`
       }
 
       const productsTransactionCost = document.getElementById(
-        'products-transaction-cost'
+        "products-transaction-cost"
       )
-      productsTransactionCost.innerHTML = productsCost.toFixed(2) + ' zł'
+      productsTransactionCost.innerHTML = productsCost.toFixed(2) + " zł"
       const deliveryTransactionCost = document.getElementById(
-        'delivery-transaction-cost'
+        "delivery-transaction-cost"
       )
-      deliveryTransactionCost.innerHTML = '0'
+      deliveryTransactionCost.innerHTML = "0"
       const finalTransactionCost = document.getElementById(
-        'final-transaction-cost'
+        "final-transaction-cost"
       )
-      finalTransactionCost.innerHTML = productsCost.toFixed(2) + ' zł'
+      finalTransactionCost.innerHTML = productsCost.toFixed(2) + " zł"
 
-      const deliveryMethods = document.getElementById('delivery-methods')
+      const deliveryMethods = document.getElementById("delivery-methods")
 
-      deliveryMethods.addEventListener('click', (e) => {
-        if (e.target.closest('.clickable-label')) {
+      deliveryMethods.addEventListener("click", (e) => {
+        if (e.target.closest(".clickable-label")) {
           const radioId = e.target
-            .closest('.clickable-label')
-            .getAttribute('data-for')
+            .closest(".clickable-label")
+            .getAttribute("data-for")
           const radioButton = document.getElementById(radioId)
           if (radioButton) {
             radioButton.checked = true
@@ -125,7 +125,7 @@ export const displayDeliveryMethods = async () => {
           deliveryMethods.appendChild(deliveryMethod)
         })
       } else {
-        const defaultDeliveryMethod = createDeliveryOption(7, 'Kurier DPD', '0')
+        const defaultDeliveryMethod = createDeliveryOption(7, "Kurier DPD", "0")
         deliveryMethods.appendChild(defaultDeliveryMethod)
       }
 
@@ -142,18 +142,18 @@ export const displayDeliveryMethods = async () => {
         ).toFixed(2)} zł`
       }
     } catch (error) {
-      console.error('Error updating primary address:', error)
+      console.error("Error updating primary address:", error)
       return {}
     }
   } else {
-    console.warn('No products in cart')
+    console.warn("No products in cart")
   }
 }
 
 const createDeliveryOption = (id, name, price, productsCost) => {
-  const option = document.createElement('div')
+  const option = document.createElement("div")
 
-  option.classList.add('delivery-option')
+  option.classList.add("delivery-option")
   option.innerHTML = `
       <div data-for="delivery-${id}" class="flex w-full mb-3 clickable-label items-center cursor-pointer">
         <input type="radio" id="delivery-${id}" name="delivery-method" value="${id}" />
@@ -162,10 +162,10 @@ const createDeliveryOption = (id, name, price, productsCost) => {
           <div class="ml-2 text-nowrap">${name}</div>
           <div class="flex">
             <div class="ml-2 text-nowrap ${
-              productsCost < 150 ? '' : 'line-through text-red-900'
+              productsCost < 150 ? "" : "line-through text-red-900"
             }">${parseFloat(price).toFixed(2)} zł</div>
             <div class="ml-2 text-nowrap ${
-              productsCost < 150 ? 'hidden' : ''
+              productsCost < 150 ? "hidden" : ""
             }">0 zł</div>
           </div>
         </div>
