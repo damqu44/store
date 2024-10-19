@@ -1,25 +1,24 @@
-import '../../../index.css'
-import '../../../css/radioInput.css'
+import "../../../index.css"
+import "../../../css/radioInput.css"
 
-import { loadHeader } from '../../components/header'
-import { loadFooter } from '../../components/footer'
-import { handleSearch } from '../../search/handleSearch'
-import { displayDeliveryMethods } from '../../transaction/displayDeliveryMethods'
-import { displayUserDetails } from '../../transaction/displayUserDetails'
-import { isAuthenticated } from '../../utils/auth'
-import { displayInvoiceDetails } from '../../transaction/displayInvoiceDetails'
-import { getUserInfo } from '../../account/api/getUserInfo'
-import { displayComment } from '../../transaction/displayComment'
-import { displayDiscount } from '../../transaction/displayDiscount'
-import getTransactionData from '../../transaction/getTransactionData'
-import managePaymentMethods from '../../transaction/managePaymentMethods'
+import { loadHeader } from "../../components/header"
+import { loadFooter } from "../../components/footer"
+import { displayDeliveryMethods } from "../../transaction/displayDeliveryMethods"
+import { displayUserDetails } from "../../transaction/displayUserDetails"
+import { isAuthenticated } from "../../utils/auth"
+import { displayInvoiceDetails } from "../../transaction/displayInvoiceDetails"
+import { getUserInfo } from "../../account/api/getUserInfo"
+import { displayComment } from "../../transaction/displayComment"
+import { displayDiscount } from "../../transaction/displayDiscount"
+import getTransactionData from "../../transaction/getTransactionData"
+import managePaymentMethods from "../../transaction/managePaymentMethods"
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", async () => {
   await loadHeader()
   loadFooter()
 
   if (!isAuthenticated()) {
-    window.location.href = '/login.html'
+    window.location.href = "/login.html"
   }
 
   const user = await getUserInfo()
@@ -32,12 +31,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   displayDiscount()
 
   const transactionPayBtn = document.getElementById(
-    'delivery-transaction-pay-btn'
+    "delivery-transaction-pay-btn"
   )
-  transactionPayBtn.addEventListener('click', async () => {
+  transactionPayBtn.addEventListener("click", async () => {
     await getTransactionData()
   })
-
-  const searchForm = document.getElementById('search-form')
-  searchForm.addEventListener('submit', handleSearch)
 })

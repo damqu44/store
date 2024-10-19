@@ -5,7 +5,6 @@ import { loadHeader } from "../../components/header"
 import { loadFooter } from "../../components/footer"
 import { checkAuth } from "../../utils/auth"
 import { getUserInfo } from "../../account/api/getUserInfo"
-import { handleSearch } from "../../search/handleSearch"
 import { getOrders } from "../../order/api/getOrders"
 import convertDate from "../../utils/convertDate"
 
@@ -61,12 +60,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       orderItemsHtml += `
       <div
         onclick="location.href='product.html?id=${item.Product.Id}'"
-        class="flex w-full p-2 cursor-pointer hover:bg-background_light/60 transition-colors">
+        class="flex flex-col sm:flex-row w-full p-2 cursor-pointer hover:ring-1	hover:ring-inset hover:ring-[#ccc] transition-colors text-xs sm:text-base">
         <div class="w-[150px] h-[100px]">
-          <img class="object-cover rounded-sm w-full h-full" src="${firstImage}"/>
+          <img class="object-contain rounded-sm w-full h-full" src="${firstImage}"/>
         </div>
         <div class="flex flex-col flex-1 ml-2">
-          <div class="mb-1 line-clamp-2">${item.Product.Name}</div>
+          <div class="mb-1 line-clamp-2 ">${item.Product.Name}</div>
           <div class="mb-1 line-clamp-1">Ilość x ${item.Quantity}</div>
           <div class="line-clamp-1">Cena ${parseFloat(item.Product.Price).toFixed(2)} zł</div>
         </div>
@@ -89,9 +88,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     orderDiv.innerHTML = `
     <div class="flex w-full">
-      <div class="text-lg font-bold mb-1">${convertDate(
-        order.OrderDate
-      )} &nbsp;|&nbsp; ${order.TotalPrice} ZŁ
+      <div class="text-sm sm:text-lg font-bold mb-1 flex flex-col sm:flex-row">
+        <div>${convertDate(order.OrderDate)}</div>
+        <div class="hidden sm:flex">&nbsp;|&nbsp;</div>
+        <div>${order.TotalPrice} ZŁ</div>
       </div>
     </div>
     <div class="text-lg">Numer zamówienia: ${order.Id}</div>
@@ -107,9 +107,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         : 'Zamówienie <span class="text-red-600">nie jest</span> opłacone, <a class="font-medium underline" href="./error.html">kliknij tutaj</a> by dokonać płatności.'
     }</div>
     `
+    orderDiv.classList.add("text-sm", "sm:text-base")
     ordersSection.appendChild(orderDiv)
   })
-
-  const searchForm = document.getElementById("search-form")
-  searchForm.addEventListener("submit", handleSearch)
 })

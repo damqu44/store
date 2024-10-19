@@ -1,34 +1,75 @@
-import { handleAddToCart } from "../cart/handleAddToCart"
+import { handleAddToCart } from "../cart/api/handleAddToCart"
 import { isAuthenticated } from "../utils/auth"
+import checkAvailableDeliveryMethods from "./checkAvailableDeliveryMethods"
 import { createQuantityButtons } from "./createQuantityButtons"
 
 export function displayProductDetails(product) {
   let cartType = null
 
   if (isAuthenticated()) {
-    cartType = "database"
+    cartType = ""
   } else {
     cartType = "cookies"
   }
 
-  const firstImage = product.Images.length > 0 ? product.Images[0].Url : ""
-
   const productDetails = document.getElementById("product-details")
   productDetails.innerHTML = `
-      <div class="bg-white dark:bg-background_dark items-center justify-center flex w-full h-[320px]">
-        <div class="w-[60%] h-[85%] relative">
-          <img
-            src="${firstImage}"
-            alt="${product.Name || "No image available"}"
-            class="rounded-sm absolute inset-0 w-full h-full object-cover " 
-          /> 
+      <div class="group bg-white dark:bg-background_dark items-center justify-center flex w-full h-[320px] relative overflow-hidden">
+        <div class="flex transition-transform duration-300 w-[90%] h-[90%]" id="image-slider">
+          ${product.Images.map(
+            (image) => `
+            <img
+              src="${image.Url}"
+              alt="${product.Name || "No image available"}"
+              class="rounded-sm w-full h-full object-contain min-w-full"
+            />
+          `
+          ).join("")}
         </div>
+        <button id="prev-image" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-black border hover:border-2 focus:bg-slate-100  dark:focus:bg-gray-700 border-[#ccc] dark:border-[#6d6d6d] text-[#ccc] rounded-xs w-[40px] h-[40px] text-2xl ml-5 opacity-0  group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-angle-left"></i></button>
+        <button id="next-image" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-black border hover:border-2 focus:bg-slate-100 dark:focus:bg-gray-700 border-[#ccc] dark:border-[#6d6d6d] text-[#ccc] rounded-xs w-[40px] h-[40px] text-2xl mr-5 opacity-0  group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-angle-right"></i></button>
       </div>
 
-      <div class="bg-white dark:bg-background_dark py-10 px-20 w-full mt-5 text-sm">
+      <div class="bg-white dark:bg-background_dark py-10 px-8 sm:px-14 w-full mt-5 text-xs sm:text-sm">
           ${product.Description || "No description available"}
-        </div>
-      `
+      </div>
+  `
+
+  const imageSlider = document.getElementById("image-slider")
+  const images = product.Images.length
+  let currentIndex = 0
+
+  function updateArrowVisibility() {
+    document
+      .getElementById("prev-image")
+      .classList.toggle("hidden", currentIndex === 0)
+    document
+      .getElementById("next-image")
+      .classList.toggle("hidden", currentIndex === images - 1)
+  }
+
+  document.getElementById("prev-image").addEventListener("click", () => {
+    if (currentIndex > 0) {
+      currentIndex--
+      updateSlider()
+      updateArrowVisibility()
+    }
+  })
+
+  document.getElementById("next-image").addEventListener("click", () => {
+    if (currentIndex < images - 1) {
+      currentIndex++
+      updateSlider()
+      updateArrowVisibility()
+    }
+  })
+
+  function updateSlider() {
+    const offset = -currentIndex * 100
+    imageSlider.style.transform = `translateX(${offset}%)`
+  }
+
+  updateArrowVisibility()
 
   const productMenu = document.getElementById("product-menu")
 
@@ -62,11 +103,11 @@ export function displayProductDetails(product) {
           <div class="border border-[#6d6d6d] border-x-0 border-t-0 border-b my-5"></div>
           <div class="flex flex-col">
             <div class="flex justify-start items-center">
-              <label for="amount" class="pb-1 mr-3 text-sm">Liczba sztuk</label>
+              <label for="amount" class="pb-1 mr-2 text-sm">Liczba sztuk</label>
               <div id="quantity-container-${
                 product.Id
               }" class="pb-2 flex flex-row"></div>
-              <div class="ml-3 text-sm">z ${product.Quantity} szt.</div>
+              <div class="ml-2 text-sm">z ${product.Quantity} szt.</div>
             </div>
               <button id="add-to-cart" class="text-white bg-primary text-xs sm:text-sm md:text-base py-2 text-nowrap">DODAJ DO KOSZYKA</button>
           </div>
@@ -95,17 +136,19 @@ export function displayProductDetails(product) {
             </div>
             <div style="max-height: calc(100% - 5rem)" class="w-full overflow-y-auto">
               <div class="w-full h-[13px] bg-background_light dark:bg-background_dark"></div>
-              <div class="mt-4">
+              <div id="pickup-point-delivery" class="mt-4">
                 <div class="w-full flex justify-between items-center text-base font-semibold px-8 pb-1 text-nowrap">
                   <div>Odbiór w punkcie</div>
                   <div>Koszt</div>
                 </div>
                 <div class="border border-[#070707] border-x-0 border-t-0 mx-4 my-1"></div>
-                <div class="w-full flex justify-between items-center text-base py-2 px-8 ">
+                <div id="parcel-locker-delivery" class="w-full flex justify-between items-center text-base py-2 px-8 ">
                   <div>Paczkomat InPost</div>
-                  <div>${product.DeliveryMethods.filter(
-                    (item) => item.Name === "kurier dpd nextday"
-                  ).map((item) => item.Price)} zł</div>
+                  <div>${getDeliveryPricesById(product.DeliveryMethods, 4)} zł</div>
+                </div>
+                <div id="pickup-delivery" class="w-full flex justify-between items-center text-base py-2 px-8 ">
+                  <div>DPD Pickup</div>
+                  <div>${getDeliveryPricesById(product.DeliveryMethods, 1)} zł</div>
                 </div>
               </div>
               <div class="w-full h-[13px] bg-background_light dark:bg-background_dark"></div>
@@ -114,19 +157,20 @@ export function displayProductDetails(product) {
                 <div>Koszt</div>
               </div>
               <div class="border border-[#070707] border-x-0 border-t-0 mx-4 my-1"></div>
-              <div class="w-full flex flex-col">
-                <div class="w-full flex justify-between items-center text-base py-2 px-8 ">
+              <div id="standard-delivery" class="w-full flex flex-col">
+                <div id="inpost-delivery" class="w-full flex justify-between items-center text-base py-2 px-8 ">
                   <div>Kurier InPost</div>
-                    <div>${product.DeliveryMethods.filter(
-                      (item) => item.Name === "kurier dpd nextday"
-                    ).map((item) => item.Price)} zł
+                    <div>${getDeliveryPricesById(product.DeliveryMethods, 6)} zł
                     </div>
                 </div>
-                <div class="w-full flex justify-between items-center text-base py-2 px-8 ">
-                  <div>Kurier DPD NEXTDAY</div>
-                    <div>${product.DeliveryMethods.filter(
-                      (item) => item.Name === "kurier dpd nextday"
-                    ).map((item) => item.Price)} zł
+                <div id="dpd-delivery" class="w-full flex justify-between items-center text-base py-2 px-8 ">
+                  <div>Kurier DPD</div>
+                    <div>${getDeliveryPricesById(product.DeliveryMethods, 7)} zł
+                    </div>
+                </div>
+                <div id="dpd-express-delivery" class="w-full flex justify-between items-center text-base py-2 px-8 ">
+                  <div>Kurier DPD EXPRESS</div>
+                    <div>${getDeliveryPricesById(product.DeliveryMethods, 2)} zł
                     </div>
                 </div>
               </div>
@@ -153,6 +197,7 @@ export function displayProductDetails(product) {
     )
   })
 
+  checkAvailableDeliveryMethods(product.DeliveryMethods)
   toggleDeliveryOptions()
 }
 
@@ -187,4 +232,10 @@ function toggleDeliveryOptions() {
       deliveryOptions.classList.add("translate-x-0")
     }, 100)
   })
+}
+
+function getDeliveryPricesById(deliveryMethods, targetId) {
+  return deliveryMethods
+    .filter((item) => item.Id === targetId)
+    .map((item) => parseFloat(item.Price).toFixed(2))
 }

@@ -1,6 +1,5 @@
 export function displayProducts(products) {
   const productList = document.getElementById("product-list")
-  console.log(products, productList)
 
   productList.innerHTML = ""
 
@@ -23,7 +22,7 @@ export function displayProducts(products) {
           <img
             src="${firstImage}"
             alt="${product.Name || "No image available"}"
-            class="object-cover rounded-md"
+            class="rounded-md"
           />
         </div>
         <div class="py-1 text-base line-clamp-2">

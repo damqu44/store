@@ -1,21 +1,18 @@
-import '../../../index.css'
-import _ from 'lodash'
+import "../../../index.css"
+import Swiper from "swiper/bundle"
 
-import Swiper from 'swiper/bundle'
+import "swiper/css/bundle"
 
-import 'swiper/css/bundle'
+import { loadHeader } from "../../components/header"
+import { loadFooter } from "../../components/footer"
 
-import { handleSearch } from '../../search/handleSearch'
-import { loadHeader } from '../../components/header'
-import { loadFooter } from '../../components/footer'
-
-const swiper = new Swiper('.swiper', {
-  direction: 'horizontal',
+const swiper = new Swiper(".swiper", {
+  direction: "horizontal",
   loop: false,
   spaceBetween: 30,
   slidesPerView: 1,
   pagination: {
-    el: '.swiper-pagination',
+    el: ".swiper-pagination",
     dynamicBullets: true,
     clickable: true,
   },
@@ -24,15 +21,13 @@ const swiper = new Swiper('.swiper', {
     disableOnInteraction: false,
   },
   navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
   },
 })
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", async () => {
   await loadHeader()
 
   loadFooter()
-  const searchForm = document.getElementById('search-form')
-  searchForm.addEventListener('submit', handleSearch)
 })

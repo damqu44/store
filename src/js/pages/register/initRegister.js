@@ -1,141 +1,192 @@
-import '../../../index.css'
-import '../../../css/input.css'
+import "../../../index.css"
+import "../../../css/input.css"
 
-import $ from 'jquery'
-import { handleSearch } from '../../search/handleSearch'
-import { loadHeader } from '../../components/header'
-import { loadFooter } from '../../components/footer'
-import { initializeInputFields } from '../../components/input'
+import { loadHeader } from "../../components/header"
+import { loadFooter } from "../../components/footer"
+import { initializeInputFields } from "../../components/input"
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", async () => {
   await loadHeader()
   loadFooter()
 
-  initializeInputFields(document.getElementById('register-form'))
+  initializeInputFields(document.getElementById("register-form"))
 
-  $(function () {
-    $('#register-form').on('submit', function (e) {
+  document
+    .getElementById("register-form")
+    .addEventListener("submit", async function (e) {
       e.preventDefault()
 
-      const email = $('#register-email').val()
-      const password = $('#register-password').val()
-      const confirmPassword = $('#register-confirm-password').val()
-      const telephoneNumber = $('#register-telephone-number').val()
-      const userName = $('#register-name').val()
-      const userLastName = $('#register-last-name').val()
+      const email = document.getElementById("register-email").value
+      const password = document.getElementById("register-password").value
+      const confirmPassword = document.getElementById(
+        "register-confirm-password"
+      ).value
+      const telephoneNumber = document.getElementById(
+        "register-telephone-number"
+      ).value
+      const userName = document.getElementById("register-name").value
+      const userLastName = document.getElementById("register-last-name").value
 
       let isValid = true
 
       function showError(inputField, message) {
-        inputField.addClass('input-field-wrong')
-        const errorBox = inputField.closest('.input-wrapper').next('.error-box')
-        errorBox.removeClass('hidden').text(message)
+        inputField.classList.add("input-field-wrong")
+        const errorBox = inputField.closest(".input-wrapper").nextElementSibling
+        errorBox.classList.remove("hidden")
+        errorBox.textContent = message
       }
 
       function removeError(inputField) {
-        inputField.removeClass('input-field-wrong')
-        const errorBox = inputField.closest('.input-wrapper').next('.error-box')
-        errorBox.addClass('hidden')
+        inputField.classList.remove("input-field-wrong")
+        const errorBox = inputField.closest(".input-wrapper").nextElementSibling
+        errorBox.classList.add("hidden")
       }
 
-      if (email.trim() === '') {
-        showError($('#register-email'), 'Wpisz adres e-mail')
+      if (email.trim() === "") {
+        showError(
+          document.getElementById("register-email"),
+          "Wpisz adres e-mail"
+        )
         isValid = false
       } else {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         if (!emailPattern.test(email)) {
-          showError($('#register-email'), 'Niepoprawny adres e-mail')
+          showError(
+            document.getElementById("register-email"),
+            "Niepoprawny adres e-mail"
+          )
           isValid = false
         } else {
-          removeError($('#register-email'))
+          removeError(document.getElementById("register-email"))
         }
       }
 
       const passwordPattern = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/
       if (!passwordPattern.test(password)) {
         showError(
-          $('#register-password'),
-          'Min. 8 znaków • wielka litera • mała litera • cyfra'
+          document.getElementById("register-password"),
+          "Min. 8 znaków • wielka litera • mała litera • cyfra"
         )
         isValid = false
       } else {
-        removeError($('#register-password'))
+        removeError(document.getElementById("register-password"))
       }
 
       if (password !== confirmPassword) {
-        showError($('#register-confirm-password'), 'Hasła muszą być identyczne')
+        showError(
+          document.getElementById("register-confirm-password"),
+          "Hasła muszą być identyczne"
+        )
         isValid = false
       } else {
-        removeError($('#register-confirm-password'))
+        removeError(document.getElementById("register-confirm-password"))
       }
 
       const phonePattern = /^\d{9}$/
       if (!phonePattern.test(telephoneNumber)) {
         showError(
-          $('#register-telephone-number'),
-          'Numer telefonu musi zawierać 9 liczb'
+          document.getElementById("register-telephone-number"),
+          "Numer telefonu musi zawierać 9 liczb"
         )
         isValid = false
       } else {
-        removeError($('#register-telephone-number'))
+        removeError(document.getElementById("register-telephone-number"))
       }
 
       if (userName.length < 1) {
-        showError($('#register-name'), 'Wpisz imię')
+        showError(document.getElementById("register-name"), "Wpisz imię")
         isValid = false
       } else {
-        removeError($('#register-name'))
+        removeError(document.getElementById("register-name"))
       }
 
       if (userLastName.length < 1) {
-        showError($('#register-last-name'), 'Wpisz nazwisko')
+        showError(
+          document.getElementById("register-last-name"),
+          "Wpisz nazwisko"
+        )
         isValid = false
       } else {
-        removeError($('#register-last-name'))
+        removeError(document.getElementById("register-last-name"))
       }
       const telephone = parseInt(telephoneNumber)
+
       if (isValid) {
-        $.ajax({
-          type: 'POST',
-          url: 'http://localhost:3000/auth/register',
-          contentType: 'application/json',
-          data: JSON.stringify({
-            email,
-            password,
-            telephone,
-            userName,
-            userLastName,
-          }),
+        const data = await register({
+          email,
+          password,
+          telephone,
+          userName,
+          userLastName,
         })
-          .done(function (response) {
-            $('#server-response').text('')
 
-            const overlay = $('<div class="alert-overlay"></div>')
-            const successAlert = $(
-              '<div class="alert">Rejestracja powiodła się! Kliknij OK, aby przejść na stronę główną.<br>Zostaniesz przekierowany za 5 sekund.</div>'
-            )
-            const okButton = $('<button class="ok-button">OK</button>')
-            successAlert.append(okButton)
-            overlay.append(successAlert)
-            $('body').append(overlay)
+        if (data) {
+          document.getElementById("server-response").textContent = ""
 
-            okButton.on('click', function () {
-              window.location.href = '/'
-            })
+          const overlay = document.createElement("div")
+          overlay.className = "alert-overlay"
 
-            setTimeout(function () {
-              window.location.href = '/'
-            }, 5000)
+          const successAlert = document.createElement("div")
+          successAlert.className = "alert"
+          successAlert.innerHTML =
+            "Rejestracja powiodła się! Kliknij OK, aby przejść do strefy logowania.<br>Zostaniesz przekierowany za 5 sekund."
+
+          const okButton = document.createElement("button")
+          okButton.className = "ok-button"
+          okButton.textContent = "OK"
+
+          successAlert.appendChild(okButton)
+          overlay.appendChild(successAlert)
+          document.body.appendChild(overlay)
+
+          okButton.addEventListener("click", function () {
+            window.location.href = "/login.html"
           })
-          .fail(function (xhr) {
-            $('#server-response')
-              .addClass('text-[#a50000]')
-              .text(xhr.responseJSON.error)
-          })
+
+          setTimeout(function () {
+            window.location.href = "/login.html"
+          }, 5000)
+        } else {
+          const serverResponse = document.getElementById("server-response")
+          serverResponse.classList.add("text-[#a50000]")
+          serverResponse.textContent = "Błąd rejestracji, spróbuj ponownie."
+        }
       }
     })
-  })
-
-  const searchForm = document.getElementById('search-form')
-  searchForm.addEventListener('submit', handleSearch)
 })
+
+async function register({
+  email,
+  password,
+  telephone,
+  userName,
+  userLastName,
+}) {
+  try {
+    const response = await fetch("http://localhost:3000/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        email,
+        password,
+        telephone,
+        userName,
+        userLastName,
+      }),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.error || "Failed to register")
+    }
+
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.error(error)
+    return
+  }
+}

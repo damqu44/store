@@ -1,12 +1,12 @@
 import { createQuantityButtons } from "../product/createQuantityButtons"
 import { isAuthenticated } from "../utils/auth"
-import { handleRemoveFromCart } from "./handleRemoveFromCart"
+import { handleRemoveFromCart } from "./api/handleRemoveFromCart"
 
 export function createCartItem(product) {
   let cartType = null
 
   if (isAuthenticated()) {
-    cartType = "database"
+    cartType = ""
   } else {
     cartType = "cookies"
   }
@@ -41,7 +41,7 @@ export function createCartItem(product) {
           <div class="w-[160px] h-[90px]">
             <a href='/product.html?id=${product.Id}'>
                 <img
-                    class="w-full h-full object-cover rounded-md"
+                    class="w-full h-full object-contain rounded-md"
                     src="${firstImage}"
                 />
             </a>  

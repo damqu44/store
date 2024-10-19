@@ -1,70 +1,47 @@
-import '../../../index.css'
-import { initializeCart } from '../../cart/initializeCart'
-import { handleSearch } from '../../search/handleSearch'
-import { getCart } from '../../cart/getCart'
-import { createCartItem } from '../../cart/createCartItem'
-import { loadHeader } from '../../components/header'
-import { loadFooter } from '../../components/footer'
-import { isAuthenticated } from '../../utils/auth'
+import "../../../index.css"
+import { initializeCart } from "../../cart/initializeCart"
+import { getCart } from "../../cart/api/getCart"
+import { createCartItem } from "../../cart/createCartItem"
+import { loadHeader } from "../../components/header"
+import { loadFooter } from "../../components/footer"
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", async () => {
   await loadHeader()
   loadFooter()
 
-  let cartType = null
-
-  if (isAuthenticated()) {
-    cartType = 'database'
-  } else {
-    cartType = 'cookies'
-  }
-
   try {
-    const dataCart = await getCart(cartType)
+    const cart = await getCart()
 
-    if (
-      dataCart &&
-      Array.isArray(dataCart.CartItems) &&
-      dataCart.CartItems.length > 0
-    ) {
-      dataCart.CartItems.forEach((product) => {
-        createCartItem(product)
-      })
-    } else if (dataCart && Array.isArray(dataCart) && dataCart.length > 0) {
-      dataCart.forEach((product) => {
+    if (!cart.cartData || cart.cartData.length > 0) {
+      cart.cartData.forEach((product) => {
         createCartItem(product)
       })
     } else {
-      console.warn('cart is empty', dataCart)
       emptyCart()
     }
-
     initializeCart()
 
-    if (dataCart) {
-      const productData = dataCart.map((item) => ({
+    if (cart.cartData && cart.cartData.length > 0) {
+      const productData = cart.cartData.map((item) => ({
         id: item.Id,
         amount: item.cartInfo.Amount,
       }))
-      sessionStorage.setItem('cartProducts', JSON.stringify(productData))
-
-      const transactionButton = document.getElementById('transaction-button')
+      sessionStorage.setItem("cartProducts", JSON.stringify(productData))
+      console.log("set")
+      const transactionButton = document.getElementById("transaction-button")
       if (transactionButton) {
-        transactionButton.addEventListener('click', () => {
-          window.location.href = '/transaction.html'
+        transactionButton.addEventListener("click", () => {
+          window.location.href = "/transaction.html"
         })
       }
     }
   } catch (error) {
-    console.error('Error loading cart data:', error)
+    console.error("Error loading cart data:", error)
   }
-
-  const searchForm = document.getElementById('search-form')
-  searchForm.addEventListener('submit', handleSearch)
 })
 
 export function emptyCart() {
-  const cartContent = document.getElementById('cart')
+  const cartContent = document.getElementById("cart")
   cartContent.innerHTML = `
       <div
         class="text-[#84949F] flex flex-col w-full justify-start items-center mt-[100px]"

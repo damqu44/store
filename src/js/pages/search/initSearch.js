@@ -2,7 +2,6 @@ import "../../../index.css"
 import _ from "lodash"
 
 import { displayProducts } from "../../product/displayProducts"
-import { handleSearch } from "../../search/handleSearch"
 import { fetchCategories } from "../../category/fetchCategories"
 import { loadHeader } from "../../components/header"
 import { loadFooter } from "../../components/footer"
@@ -87,8 +86,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   ifProductsThenDisplay(allProducts)
 
   loadFooter()
-  const searchForm = document.getElementById("search-form")
-  searchForm.addEventListener("submit", handleSearch)
 })
 
 export const ifProductsThenDisplay = (products) => {
