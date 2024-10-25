@@ -1,17 +1,12 @@
 import "../../../index.css"
 import "../../../css/radioInput.css"
 
-import { loadHeader } from "../../components/header"
-import { loadFooter } from "../../components/footer"
 import { checkAuth } from "../../utils/auth"
 import { getUserInfo } from "../../account/api/getUserInfo"
 import { getOrders } from "../../order/api/getOrders"
 import convertDate from "../../utils/convertDate"
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await loadHeader()
-  loadFooter()
-
   checkAuth()
 
   const user = await getUserInfo()

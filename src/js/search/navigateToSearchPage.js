@@ -1,6 +1,6 @@
-export function navigateToSearchPage(products) {
+export function navigateToSearchPage(query) {
   const queryParams = new URLSearchParams()
-  queryParams.append('products', JSON.stringify(products))
+  queryParams.append("query", query)
 
   window.location.href = `/search.html?${queryParams.toString()}`
 }

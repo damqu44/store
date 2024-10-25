@@ -1,8 +1,6 @@
 import "../../../index.css"
 import "../../../css/radioInput.css"
 
-import { loadHeader } from "../../components/header"
-import { loadFooter } from "../../components/footer"
 import { displayDeliveryMethods } from "../../transaction/displayDeliveryMethods"
 import { displayUserDetails } from "../../transaction/displayUserDetails"
 import { isAuthenticated } from "../../utils/auth"
@@ -14,9 +12,6 @@ import getTransactionData from "../../transaction/getTransactionData"
 import managePaymentMethods from "../../transaction/managePaymentMethods"
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await loadHeader()
-  loadFooter()
-
   if (!isAuthenticated()) {
     window.location.href = "/login.html"
   }

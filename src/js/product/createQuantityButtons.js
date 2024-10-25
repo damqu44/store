@@ -1,7 +1,7 @@
 import { handleAddToCart } from "../cart/api/handleAddToCart"
 import { updateProductValue } from "../cart/initializeCart"
 
-export function createQuantityButtons(product, isUpdate, cartType) {
+export function createQuantityButtons(product, isUpdate) {
   const quantityContainer = document.getElementById(
     `quantity-container-${product.Id}`
   )
@@ -48,8 +48,7 @@ export function createQuantityButtons(product, isUpdate, cartType) {
           Id: product.Id,
           Amount: parseInt(quantityInput.value, 10),
         },
-        true,
-        cartType
+        true
       )
     }
   }

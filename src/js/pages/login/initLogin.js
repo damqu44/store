@@ -1,8 +1,6 @@
 import "../../../index.css"
 import "../../../css/input.css"
 
-import { loadHeader } from "../../components/header"
-import { loadFooter } from "../../components/footer"
 import {
   initializeInputFields,
   showError,
@@ -10,8 +8,6 @@ import {
 } from "../../components/input"
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await loadHeader()
-  loadFooter()
   initializeInputFields(document.getElementById("login-form"))
 
   document

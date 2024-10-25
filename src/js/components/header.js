@@ -14,13 +14,18 @@ export async function loadHeader() {
     console.error("Error loading cart data:", error)
   }
 
+  header.id = "header"
   header.classList.add(
     "w-full",
     "px-10",
     "py-3",
     "flex",
     "justify-between",
+    "sticky",
+    "top-0",
+    "left-0",
     "bg-white",
+    "z-[33]",
     "dark:bg-[#222222]"
   )
 
@@ -30,7 +35,7 @@ export async function loadHeader() {
       <div class="font-mono text-base sm:text-2xl text-primary">
         <a href="/">Maître d'outils</a>
       </div>
-      <div id="search-area" class="hidden w-full fixed top-0 left-0 py-4 sm:p-0 z-10  bg-white dark:bg-background_dark sm:bg-auto sm:static sm:flex sm:w-[40%] sm:max-w-[600px] shadow-sm">
+      <div id="search-area" class="hidden w-full fixed top-0 left-0 py-4 sm:p-0 z-[34]  bg-white dark:bg-background_dark sm:bg-auto sm:static sm:flex sm:w-[40%] sm:max-w-[600px] shadow-sm">
         <form id="search-form" class="w-full h-[35px] flex justify-center items-center ml-3 sm:ml-0">
           <i id="close-search-area-button" class="sm:hidden fa-solid fa-arrow-left mr-2 cursor-pointer hover:text-primary transition-colors text-base"></i>
           <input type="text" placeholder="czego szukasz?" class="bg-transparent rounded-l-md border border-[#6d6d6d] px-3 py-1 w-full h-full text-sm  outline-none" />

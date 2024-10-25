@@ -1,11 +1,8 @@
 import "../../../index.css"
 import Swiper from "swiper/bundle"
-
 import "swiper/css/bundle"
 
-import { loadHeader } from "../../components/header"
-import { loadFooter } from "../../components/footer"
-
+// eslint-disable-next-line no-unused-vars
 const swiper = new Swiper(".swiper", {
   direction: "horizontal",
   loop: false,
@@ -24,10 +21,4 @@ const swiper = new Swiper(".swiper", {
     nextEl: ".swiper-button-next",
     prevEl: ".swiper-button-prev",
   },
-})
-
-document.addEventListener("DOMContentLoaded", async () => {
-  await loadHeader()
-
-  loadFooter()
 })

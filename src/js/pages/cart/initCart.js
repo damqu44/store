@@ -2,13 +2,8 @@ import "../../../index.css"
 import { initializeCart } from "../../cart/initializeCart"
 import { getCart } from "../../cart/api/getCart"
 import { createCartItem } from "../../cart/createCartItem"
-import { loadHeader } from "../../components/header"
-import { loadFooter } from "../../components/footer"
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await loadHeader()
-  loadFooter()
-
   try {
     const cart = await getCart()
 

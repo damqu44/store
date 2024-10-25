@@ -1,6 +1,15 @@
 import { updateCartCount } from "../../components/header"
+import { isAuthenticated } from "../../utils/auth"
 
-export async function handleAddToCart(product, isUpdate, cartType) {
+export async function handleAddToCart(product, isUpdate) {
+  let cartType = null
+
+  if (isAuthenticated()) {
+    cartType = ""
+  } else {
+    cartType = "cookies"
+  }
+
   try {
     const response = await fetch(`http://localhost:3000/cart/${cartType}`, {
       method: "POST",
