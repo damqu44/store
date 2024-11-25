@@ -1,16 +1,9 @@
 {
     "version": 2,
     "builds": [
-      {
-        "src": "package.json",
-        "use": "@vercel/static-build",
-        "config": {
-          "distDir": "dist"
-        }
-      }
+      { "src": "webpack.config.js", "use": "@vercel/static-build" }
     ],
     "routes": [
-      { "src": "/", "dest": "/index.html" },
       { "src": "/product", "dest": "/product.html" },
       { "src": "/search", "dest": "/search.html" },
       { "src": "/cart", "dest": "/cart.html" },
@@ -19,7 +12,6 @@
       { "src": "/account", "dest": "/account.html" },
       { "src": "/transaction", "dest": "/transaction.html" },
       { "src": "/orders", "dest": "/orders.html" },
-      { "src": "/error", "dest": "/error.html" },
-      { "src": "/(.*)", "dest": "/error.html" }
+      { "src": "/(.*)", "dest": "/index.html" }
     ]
   }
