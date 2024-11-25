@@ -1,10 +1,12 @@
+import { BASE_URL } from "../../../../backend-config"
+
 export async function getProducts(productData) {
-  const response = await fetch('http://localhost:3000/transaction', {
-    method: 'POST',
+  const response = await fetch(`${BASE_URL}/transaction`, {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
-    credentials: 'include',
+    credentials: "include",
     body: JSON.stringify({ products: productData }),
   })
 

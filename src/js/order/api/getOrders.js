@@ -1,10 +1,12 @@
+import { BASE_URL } from "../../../../backend-config"
+
 export async function getOrders() {
-  const response = await fetch('http://localhost:3000/order', {
-    method: 'GET',
+  const response = await fetch(`${BASE_URL}/order`, {
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
-    credentials: 'include',
+    credentials: "include",
   })
 
   if (!response.ok) {

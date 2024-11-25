@@ -1,28 +1,29 @@
-import { hideModal, showModal } from './modal'
+import { hideModal, showModal } from "./modal"
 import {
   initializeInputFields,
   removeError,
   showError,
-} from '../components/input'
-import validatePassword from '../validation/isValidPassword'
+} from "../components/input"
+import validatePassword from "../validation/isValidPassword"
+import { BASE_URL } from "../../../backend-config"
 
-export async function setupEditPassword(user) {
-  showModal('edit-password-modal')
+export async function setupEditPassword() {
+  showModal("edit-password-modal")
   populateEditForm()
   initializeInputFields()
   initializeEventListeners()
 }
 
 function populateEditForm() {
-  const passwordInput = document.getElementById('edit-password')
-  const confirmPasswordInput = document.getElementById('edit-confirm-password')
-  const oldPasswordInput = document.getElementById('edit-old-password')
+  const passwordInput = document.getElementById("edit-password")
+  const confirmPasswordInput = document.getElementById("edit-confirm-password")
+  const oldPasswordInput = document.getElementById("edit-old-password")
 
-  document.getElementById('server-response-edit-email').textContent = ''
+  document.getElementById("server-response-edit-email").textContent = ""
 
-  passwordInput.value = ''
-  confirmPasswordInput.value = ''
-  oldPasswordInput.value = ''
+  passwordInput.value = ""
+  confirmPasswordInput.value = ""
+  oldPasswordInput.value = ""
 
   removeError(passwordInput)
   removeError(confirmPasswordInput)
@@ -39,25 +40,25 @@ function populateEditForm() {
 
 function initializeEventListeners() {
   document
-    .getElementById('edit-password-cancel-btn')
-    .addEventListener('click', () => {
-      hideModal('edit-password-modal')
+    .getElementById("edit-password-cancel-btn")
+    .addEventListener("click", () => {
+      hideModal("edit-password-modal")
     })
 
   document
-    .getElementById('edit-password-form')
-    .addEventListener('submit', handleSubmit)
+    .getElementById("edit-password-form")
+    .addEventListener("submit", handleSubmit)
 }
 
 function handleSubmit(e) {
   e.preventDefault()
 
-  const passwordInput = document.getElementById('edit-password')
-  const confirmPasswordInput = document.getElementById('edit-confirm-password')
-  const oldPasswordInput = document.getElementById('edit-old-password')
+  const passwordInput = document.getElementById("edit-password")
+  const confirmPasswordInput = document.getElementById("edit-confirm-password")
+  const oldPasswordInput = document.getElementById("edit-old-password")
 
-  if (oldPasswordInput.value.trim() === '') {
-    showError(oldPasswordInput, 'Wpisz obecne hasło')
+  if (oldPasswordInput.value.trim() === "") {
+    showError(oldPasswordInput, "Wpisz obecne hasło")
     return
   } else {
     removeError(oldPasswordInput)
@@ -68,7 +69,7 @@ function handleSubmit(e) {
     confirmPasswordInput.value
   )
 
-  if (validationResult !== 'valid') {
+  if (validationResult !== "valid") {
     showError(passwordInput, validationResult)
     return
   } else {
@@ -76,7 +77,7 @@ function handleSubmit(e) {
   }
 
   if (passwordInput.value !== confirmPasswordInput.value) {
-    showError(confirmPasswordInput, 'Hasła muszą być identyczne')
+    showError(confirmPasswordInput, "Hasła muszą być identyczne")
     return
   } else {
     removeError(confirmPasswordInput)
@@ -87,12 +88,12 @@ function handleSubmit(e) {
     newPassword: passwordInput.value,
   }
 
-  fetch('http://localhost:3000/user/editpassword', {
-    method: 'PATCH',
+  fetch(`${BASE_URL}/user/editpassword`, {
+    method: "PATCH",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
-    credentials: 'include',
+    credentials: "include",
     body: JSON.stringify(dataToSend),
   })
     .then(async (response) => {
@@ -103,13 +104,12 @@ function handleSubmit(e) {
       return response.json()
     })
     .then(() => {
-      document.getElementById('server-response-edit-password').textContent = ''
+      document.getElementById("server-response-edit-password").textContent = ""
       location.reload()
     })
     .catch((error) => {
-      document.getElementById(
-        'server-response-edit-password'
-      ).textContent = `${error}`
+      document.getElementById("server-response-edit-password").textContent =
+        `${error}`
       console.log(error.message)
     })
 }

@@ -1,4 +1,5 @@
 import { isAuthenticated } from "../../utils/auth"
+import { BASE_URL } from "../../../../backend-config"
 
 export async function getCart() {
   let cartType = null
@@ -10,7 +11,7 @@ export async function getCart() {
   }
 
   try {
-    const response = await fetch(`http://localhost:3000/cart/${cartType}`, {
+    const response = await fetch(`${BASE_URL}/cart/${cartType}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -1,11 +1,12 @@
-import { hideModal, showModal } from './modal'
-import { initializeInputFields } from '../components/input'
-import { setupEditAddress } from './editAddress'
-import { updatePrimaryAddress } from './api/updatePrimaryAddress'
+import { hideModal, showModal } from "./modal"
+import { initializeInputFields } from "../components/input"
+import { setupEditAddress } from "./editAddress"
+import { updatePrimaryAddress } from "./api/updatePrimaryAddress"
+import { BASE_URL } from "../../../backend-config"
 
 export function displayAddresses(userAddresses, PrimaryAddressDeliveryId) {
   let PrimaryAddressId = PrimaryAddressDeliveryId
-  const addressDeliveryLimit = document.getElementById('address-delivery-limit')
+  const addressDeliveryLimit = document.getElementById("address-delivery-limit")
 
   if (Array.isArray(userAddresses) && userAddresses.length === 1) {
     updatePrimaryAddress(userAddresses[0])
@@ -16,7 +17,7 @@ export function displayAddresses(userAddresses, PrimaryAddressDeliveryId) {
     addressDeliveryLimit.innerHTML = `
                 Posiadasz maksymalną dopuszczalną ilość adresów <span class="font-bold">${userAddresses.length}/5</span>
                `
-    document.getElementById('add-address-delivery-btn').classList.add('hidden')
+    document.getElementById("add-address-delivery-btn").classList.add("hidden")
   } else if (userAddresses.length < 5) {
     addressDeliveryLimit.innerHTML = `
                Masz możliwość dodania <span class="font-bold">${
@@ -26,14 +27,14 @@ export function displayAddresses(userAddresses, PrimaryAddressDeliveryId) {
   }
 
   const addressesWrapperField = document.getElementById(
-    'address-delivery-wrapper'
+    "address-delivery-wrapper"
   )
 
-  const app = document.getElementById('app')
+  const app = document.getElementById("app")
 
-  const editAddressDeliveryModal = document.createElement('div')
-  editAddressDeliveryModal.id = 'edit-address-delivery-modal'
-  editAddressDeliveryModal.classList.add('modal', 'hidden')
+  const editAddressDeliveryModal = document.createElement("div")
+  editAddressDeliveryModal.id = "edit-address-delivery-modal"
+  editAddressDeliveryModal.classList.add("modal", "hidden")
 
   editAddressDeliveryModal.innerHTML = `
                           <form id="edit-address-delivery-form" class="flex flex-col">
@@ -140,9 +141,9 @@ export function displayAddresses(userAddresses, PrimaryAddressDeliveryId) {
   app.appendChild(editAddressDeliveryModal)
 
   userAddresses.forEach((address) => {
-    const newAddressBox = document.createElement('div')
-    newAddressBox.classList.add('address-box')
-    newAddressBox.setAttribute('data-id', address.Id)
+    const newAddressBox = document.createElement("div")
+    newAddressBox.classList.add("address-box")
+    newAddressBox.setAttribute("data-id", address.Id)
 
     newAddressBox.innerHTML = `
       <div id="user-address-full-name" class="font-bold pb-2">${address.Name} ${address.LastName}</div>
@@ -175,85 +176,82 @@ export function displayAddresses(userAddresses, PrimaryAddressDeliveryId) {
 
     addressesWrapperField.appendChild(newAddressBox)
 
-    const primaryAdressField = newAddressBox.querySelector('.primary')
-    const noPrimaryAdressField = newAddressBox.querySelector('.no-primary')
+    const primaryAdressField = newAddressBox.querySelector(".primary")
+    const noPrimaryAdressField = newAddressBox.querySelector(".no-primary")
 
-    noPrimaryAdressField.addEventListener('click', async () => {
+    noPrimaryAdressField.addEventListener("click", async () => {
       try {
         await updatePrimaryAddress(address)
 
         addressesWrapperField
-          .querySelectorAll('.address-box')
+          .querySelectorAll(".address-box")
           .forEach((adr) => {
-            adr.classList.remove('active')
+            adr.classList.remove("active")
 
-            const primaryAdressField = adr.querySelector('.primary')
-            const noPrimaryAdressField = adr.querySelector('.no-primary')
+            const primaryAdressField = adr.querySelector(".primary")
+            const noPrimaryAdressField = adr.querySelector(".no-primary")
 
             if (primaryAdressField && noPrimaryAdressField) {
-              primaryAdressField.classList.add('hidden')
-              noPrimaryAdressField.classList.remove('hidden')
+              primaryAdressField.classList.add("hidden")
+              noPrimaryAdressField.classList.remove("hidden")
             }
           })
 
-        newAddressBox.classList.add('active')
-        primaryAdressField.classList.remove('hidden')
-        noPrimaryAdressField.classList.add('hidden')
+        newAddressBox.classList.add("active")
+        primaryAdressField.classList.remove("hidden")
+        noPrimaryAdressField.classList.add("hidden")
       } catch (error) {
-        console.error('Error updating primary address:', error)
+        console.error("Error updating primary address:", error)
         return {}
       }
     })
 
     if (address.Id === PrimaryAddressId) {
-      newAddressBox.classList.add('active')
-      primaryAdressField.classList.remove('hidden')
-      noPrimaryAdressField.classList.add('hidden')
+      newAddressBox.classList.add("active")
+      primaryAdressField.classList.remove("hidden")
+      noPrimaryAdressField.classList.add("hidden")
     } else {
-      newAddressBox.classList.remove('active')
-      primaryAdressField.classList.add('hidden')
-      noPrimaryAdressField.classList.remove('hidden')
+      newAddressBox.classList.remove("active")
+      primaryAdressField.classList.add("hidden")
+      noPrimaryAdressField.classList.remove("hidden")
     }
 
     newAddressBox
-      .querySelector('.user-address-delete-btn')
-      .addEventListener('click', async () => {
+      .querySelector(".user-address-delete-btn")
+      .addEventListener("click", async () => {
         try {
           await deleteAddress(address.Id)
           location.reload()
         } catch (error) {
           document.getElementById(
-            'server-response-delete-address'
+            "server-response-delete-address"
           ).textContent = error
         }
       })
 
     newAddressBox
-      .querySelector('.user-address-edit-btn')
-      .addEventListener('click', () => {
-        showModal('edit-address-delivery-modal')
+      .querySelector(".user-address-edit-btn")
+      .addEventListener("click", () => {
+        showModal("edit-address-delivery-modal")
         setupEditAddress(address)
         initializeInputFields()
       })
 
     document
-      .getElementById('edit-address-delivery-cancel-btn')
-      .addEventListener('click', () => hideModal('edit-address-delivery-modal'))
+      .getElementById("edit-address-delivery-cancel-btn")
+      .addEventListener("click", () => hideModal("edit-address-delivery-modal"))
   })
 }
 
 async function deleteAddress(addressId) {
-  const response = await fetch(
-    'http://localhost:3000/user/deleteaddressdelivery',
-    {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({ addressDeliveryId: addressId }),
-    }
-  )
+  const response = await fetch(`${BASE_URL}/user/deleteaddressdelivery`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ addressDeliveryId: addressId }),
+  })
 
   if (!response.ok) {
     const error = await response.json()

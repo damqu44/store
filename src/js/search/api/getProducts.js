@@ -1,3 +1,5 @@
+import { BASE_URL } from "../../../../backend-config"
+
 export async function getProducts(
   currentPage,
   productsPerPage,
@@ -6,7 +8,7 @@ export async function getProducts(
 ) {
   try {
     const response = await fetch(
-      `http://localhost:3000/search/?page=${currentPage}&limit=${productsPerPage}&content=${encodeURIComponent(content)}&category=${encodeURIComponent(category)}`,
+      `${BASE_URL}/search/?page=${currentPage}&limit=${productsPerPage}&content=${encodeURIComponent(content)}&category=${encodeURIComponent(category)}`,
       {
         method: "GET",
         headers: {

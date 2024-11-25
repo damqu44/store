@@ -1,16 +1,17 @@
-import { displayProducts } from './displayProducts'
+import { displayProducts } from "./displayProducts"
+import { BASE_URL } from "../../../../backend-config"
 
-export async function fetchSortedProducts(sort = '', category = '') {
+export async function fetchSortedProducts(sort = "", category = "") {
   try {
     const response = await fetch(
-      `http://localhost:3000/products?sort=${sort}&category=${category}`
+      `${BASE_URL}/products?sort=${sort}&category=${category}`
     )
     if (!response.ok) {
-      throw new Error('Network response was not ok ' + response.statusText)
+      throw new Error("Network response was not ok " + response.statusText)
     }
     const products = await response.json()
     displayProducts(products)
   } catch (error) {
-    console.error('There has been a problem with your fetch operation:', error)
+    console.error("There has been a problem with your fetch operation:", error)
   }
 }

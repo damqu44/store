@@ -1,6 +1,8 @@
+import { BASE_URL } from "../../../../backend-config"
+
 export async function fetchProductByIds(productsIds) {
   try {
-    const response = await fetch("http://localhost:3000/products/ids", {
+    const response = await fetch(`${BASE_URL}/products/ids`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

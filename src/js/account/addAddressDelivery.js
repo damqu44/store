@@ -1,57 +1,58 @@
-import { hideModal, showModal } from './modal'
+import { hideModal, showModal } from "./modal"
 import {
   initializeInputFields,
   removeError,
   showError,
-} from '../components/input'
-import isValidName from '../validation/isValidName'
-import validateTelephone from '../validation/isValidTelephone'
+} from "../components/input"
+import isValidName from "../validation/isValidName"
+import validateTelephone from "../validation/isValidTelephone"
+import { BASE_URL } from "../../../backend-config"
 
-export async function setupAddAddressDelivery(user) {
+export async function setupAddAddressDelivery() {
   createAddAddressModal()
-  showModal('add-address-delivery-modal')
+  showModal("add-address-delivery-modal")
   initializeInputFields()
   initializeEventListeners()
 }
 
 function initializeEventListeners() {
   document
-    .getElementById('add-address-delivery-cancel-btn')
-    .addEventListener('click', () => {
-      hideModal('add-address-delivery-modal')
+    .getElementById("add-address-delivery-cancel-btn")
+    .addEventListener("click", () => {
+      hideModal("add-address-delivery-modal")
       const showAddressesModal = document.getElementById(
-        'show-addresses-delivery-modal'
+        "show-addresses-delivery-modal"
       )
       if (showAddressesModal) {
-        hideModal('show-addresses-delivery-modal')
+        hideModal("show-addresses-delivery-modal")
       }
     })
 
   document
-    .getElementById('add-address-delivery-form')
-    .addEventListener('submit', handleSubmit)
+    .getElementById("add-address-delivery-form")
+    .addEventListener("submit", handleSubmit)
 }
 
 function createAddAddressModal() {
-  const addAddressModal = document.createElement('div')
-  addAddressModal.id = 'add-address-delivery-modal'
+  const addAddressModal = document.createElement("div")
+  addAddressModal.id = "add-address-delivery-modal"
   addAddressModal.classList.add(
-    'fixed',
-    'top-[50%]',
-    'left-[50%]',
-    'translate-x-[-50%]',
-    'translate-y-[-50%]',
-    'w-full',
-    'sm:w-[50vw]',
-    'max-h-[90vh]',
-    'bg-white',
-    'dark:bg-background_dark',
-    'px-10',
-    'py-5',
-    'hidden',
-    'overflow-auto',
-    'z-20',
-    'modal'
+    "fixed",
+    "top-[50%]",
+    "left-[50%]",
+    "translate-x-[-50%]",
+    "translate-y-[-50%]",
+    "w-full",
+    "sm:w-[50vw]",
+    "max-h-[90vh]",
+    "bg-white",
+    "dark:bg-background_dark",
+    "px-10",
+    "py-5",
+    "hidden",
+    "overflow-auto",
+    "z-20",
+    "modal"
   )
   addAddressModal.innerHTML = `
   <form id='add-address-delivery-form' class='flex flex-col'>
@@ -166,71 +167,68 @@ function createAddAddressModal() {
       ></div>
     </form>
   `
-  const app = document.getElementById('app')
+  const app = document.getElementById("app")
   app.appendChild(addAddressModal)
 }
 
 function handleSubmit(e) {
   e.preventDefault()
 
-  const addNameField = document.getElementById('add-address-delivery-name')
+  const addNameField = document.getElementById("add-address-delivery-name")
   const addLastNameField = document.getElementById(
-    'add-address-delivery-last-name'
+    "add-address-delivery-last-name"
   )
-  const addStreetField = document.getElementById('add-address-delivery-street')
-  const addCommentField = document.getElementById(
-    'add-address-delivery-comment'
-  )
+  const addStreetField = document.getElementById("add-address-delivery-street")
   const addZipCodeField = document.getElementById(
-    'add-address-delivery-zip-code'
+    "add-address-delivery-zip-code"
   )
-  const addCityField = document.getElementById('add-address-delivery-city')
+  const addCityField = document.getElementById("add-address-delivery-city")
   const addTelephoneField = document.getElementById(
-    'add-address-delivery-telephone'
+    "add-address-delivery-telephone"
   )
 
   let isValid = true
 
-  if (addNameField.value.trim() === '') {
-    showError(addNameField, 'Wpisz swoje imię')
+  if (addNameField.value.trim() === "") {
+    showError(addNameField, "Wpisz swoje imię")
     isValid = false
   } else if (!isValidName(addNameField.value)) {
-    showError(addNameField, 'Wpisz prawidłowe imię')
+    showError(addNameField, "Wpisz prawidłowe imię")
     isValid = false
   } else removeError(addNameField)
 
-  if (addLastNameField.value.trim() === '') {
-    showError(addLastNameField, 'Wpisz swoje nazwisko')
+  if (addLastNameField.value.trim() === "") {
+    showError(addLastNameField, "Wpisz swoje nazwisko")
     isValid = false
   } else if (!isValidName(addLastNameField.value)) {
-    showError(addLastNameField, 'Wpisz prawidłowe nazwisko')
+    showError(addLastNameField, "Wpisz prawidłowe nazwisko")
     isValid = false
   } else removeError(addLastNameField)
 
-  if (addStreetField.value.trim() === '') {
-    showError(addStreetField, 'Wpisz adres dostawy')
+  if (addStreetField.value.trim() === "") {
+    showError(addStreetField, "Wpisz adres dostawy")
     isValid = false
   } else if (addStreetField.value.length > 100) {
-    showError('Adres nie może przekroczyć 100 znaków')
+    showError("Adres nie może przekroczyć 100 znaków")
     isValid = false
   } else removeError(addStreetField)
 
   const zipCodePattern = /^\d{2}-\d{3}$/
   if (!zipCodePattern.test(addZipCodeField.value)) {
-    showError(addZipCodeField, 'Kod pocztowy musi mieć format XX-XXX')
+    showError(addZipCodeField, "Kod pocztowy musi mieć format XX-XXX")
     isValid = false
   } else removeError(addZipCodeField)
 
-  if (addCityField.value.trim() === '') {
-    showError(addCityField, 'Wpisz miasto')
+  if (addCityField.value.trim() === "") {
+    showError(addCityField, "Wpisz miasto")
     isValid = false
   } else if (addCityField.value.length > 30) {
-    showError(addCityField, 'Nazwa miasta nie może przekroczyć 30 znaków')
+    showError(addCityField, "Nazwa miasta nie może przekroczyć 30 znaków")
     isValid = false
   } else removeError(addCityField)
 
   const isTelephoneValid = validateTelephone(addTelephoneField.value)
-  if (isTelephoneValid != 'valid') {
+  if (isTelephoneValid != "valid") {
     showError(addTelephoneField, isTelephoneValid)
     isValid = false
   } else removeError(addTelephoneField)
@@ -246,12 +244,12 @@ function handleSubmit(e) {
     telephone: addTelephoneField.value,
   }
 
-  fetch('http://localhost:3000/user/addaddressdelivery', {
-    method: 'POST',
+  fetch(`${BASE_URL}/user/addaddressdelivery`, {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
-    credentials: 'include',
+    credentials: "include",
     body: JSON.stringify(dataToSend),
   })
     .then(async (response) => {
@@ -263,13 +261,13 @@ function handleSubmit(e) {
     })
     .then(() => {
       document.getElementById(
-        'server-response-add-address-delivery'
-      ).textContent = ''
+        "server-response-add-address-delivery"
+      ).textContent = ""
       location.reload()
     })
     .catch((error) => {
       document.getElementById(
-        'server-response-add-address-delivery'
+        "server-response-add-address-delivery"
       ).textContent = error
     })
 }
