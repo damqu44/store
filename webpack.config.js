@@ -138,7 +138,6 @@ module.exports = {
         { from: /^\/account/, to: "/account.html" },
         { from: /^\/transaction/, to: "/transaction.html" },
         { from: /^\/orders/, to: "/orders.html" },
-        // Fallback for all other routes
         { from: /./, to: "/error.html" },
       ],
     },
