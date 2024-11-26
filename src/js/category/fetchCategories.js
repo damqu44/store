@@ -3,7 +3,13 @@ import { BASE_URL } from "../../../backend-config"
 
 export async function fetchCategories() {
   try {
-    const response = await fetch(`${BASE_URL}/categories`)
+    const response = await fetch(`${BASE_URL}/categories`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
     if (!response.ok) {
       throw new Error("Network response failes " + response.statusText)
     }
