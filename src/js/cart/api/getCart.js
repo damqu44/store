@@ -17,6 +17,7 @@ export async function getCart() {
         "Content-Type": "application/json",
       },
       credentials: "include",
+      mode: "no-cors",
     })
 
     if (!response.ok) {
