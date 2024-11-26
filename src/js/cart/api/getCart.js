@@ -17,7 +17,6 @@ export async function getCart() {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      mode: "no-cors",
     })
 
     if (!response.ok) {
@@ -25,6 +24,8 @@ export async function getCart() {
     }
 
     const data = await response.json()
+    console.log(data)
+
     return data || []
   } catch (error) {
     console.error(error)

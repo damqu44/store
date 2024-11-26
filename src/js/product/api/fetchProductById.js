@@ -3,7 +3,13 @@ import { BASE_URL } from "../../../../backend-config"
 
 export async function fetchProductById(id) {
   try {
-    const response = await fetch(`${BASE_URL}/products/${id}`)
+    const response = await fetch(`${BASE_URL}/products/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
     if (!response.ok) {
       throw new Error(response.statusText)
     }
@@ -11,6 +17,5 @@ export async function fetchProductById(id) {
     displayProductDetails(product)
   } catch (error) {
     console.error("There has been a problem with your fetch operation:", error)
-    // window.location.href = '/error.html'
   }
 }
