@@ -70,7 +70,7 @@
 export async function getCart() {
   try {
     const response = await fetch(
-      `https://nodejs-serverless-function-express-eta-lac.vercel.app/api/hello`,
+      `https://nodejs-serverless-beta.vercel.app/api/hello`,
       {
         method: "GET",
         headers: {
