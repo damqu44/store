@@ -1,5 +1,6 @@
 import "../../../index.css"
 import "../../../css/input.css"
+import { BASE_URL } from "../../../../backend-config"
 
 import {
   initializeInputFields,
@@ -45,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (isValid) {
         const xhr = new XMLHttpRequest()
-        xhr.open("POST", "http://localhost:3000/auth/login", true)
+        xhr.open("POST", `${BASE_URL}/auth/login`, true)
         xhr.setRequestHeader("Content-Type", "application/json")
         xhr.withCredentials = true
         xhr.onreadystatechange = function () {
