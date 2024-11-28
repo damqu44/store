@@ -73,6 +73,6 @@ function onLoginSuccess() {
     window.location.href = redirectUrl
     localStorage.removeItem("redirectAfterLogin")
   } else {
-    window.location.href = "/"
+    // window.location.href = "/"
   }
 }

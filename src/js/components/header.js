@@ -63,7 +63,6 @@ export async function loadHeader() {
     `
   app.prepend(header)
 
-  console.log(cart)
   updateCartCount(cart.cartData)
 
   const accountButton = document.getElementById("account-button")

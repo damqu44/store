@@ -81,6 +81,5 @@ export async function loadUserInfo() {
     }
   } catch (error) {
     console.error("Failed to load user info:", error)
-    // location.href = '/error.html'
   }
 }
