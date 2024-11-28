@@ -9,6 +9,7 @@ export async function getCart() {
   } else {
     cartType = "cookies"
   }
+  console.log(document.cookie)
 
   try {
     const response = await fetch(`${BASE_URL}/cart/${cartType}`, {

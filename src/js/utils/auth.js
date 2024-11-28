@@ -1,6 +1,8 @@
 export function isAuthenticated() {
   const cookies = document.cookie.split("; ")
   const tokenCookie = cookies.find((row) => row.startsWith("authToken"))
+  console.log(document.cookie)
+
   return tokenCookie !== undefined
 }
 
