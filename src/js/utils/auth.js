@@ -1,7 +1,7 @@
 export function isAuthenticated() {
-  return !!document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("authToken="))
+  const cookies = document.cookie.split("; ")
+  const tokenCookie = cookies.find((row) => row.startsWith("authToken"))
+  return tokenCookie !== undefined
 }
 
 export function checkAuth() {
