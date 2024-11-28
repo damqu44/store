@@ -67,6 +67,7 @@ export async function loadHeader() {
 
   const accountButton = document.getElementById("account-button")
   accountButton.addEventListener("click", () => {
+    console.log(authStatus)
     if (authStatus) {
       window.location.href = "/account.html"
     } else {
