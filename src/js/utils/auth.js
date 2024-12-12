@@ -1,12 +1,15 @@
 export function isAuthenticated() {
-  const cookies = document.cookie.split("; ")
-  const tokenCookie = cookies.find((row) => row.startsWith("authToken"))
-  console.log(document.cookie)
+  const cookies = document.cookie.split("; ").reduce((acc, cookie) => {
+    const [key, value] = cookie.split("=")
+    acc[key] = value
+    return acc
+  }, {})
 
-  return tokenCookie !== undefined
+  return Boolean(cookies.authToken)
 }
 
 export function checkAuth() {
+  console.log(!isAuthenticated)
   if (!isAuthenticated()) {
     localStorage.setItem("redirectAfterLogin", window.location.href)
 
