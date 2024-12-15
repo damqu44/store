@@ -43,17 +43,15 @@ export async function checkAuth() {
     })
 
     if (!response.ok) {
-      throw new Error("Failed to fetch cart data")
+      const errorData = await response.json()
+      console.error("Error:", errorData.message)
+      return false
     }
 
     const data = await response.json()
     console.log(data)
 
-    if (data.userId) {
-      return true
-    } else {
-      return false
-    }
+    return data.authenticated === true
   } catch (error) {
     console.error(error)
     // window.location.href = "/login.html"
