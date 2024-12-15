@@ -4,8 +4,7 @@ import { BASE_URL } from "../../../../backend-config"
 export async function getCart() {
   let cartType = null
   const isAuthenticated = await checkAuth()
-  console.log(isAuthenticated)
-  if (isAuthenticated.authenticated) {
+  if (isAuthenticated) {
     cartType = ""
   } else {
     cartType = "cookies"
@@ -25,8 +24,6 @@ export async function getCart() {
     }
 
     const data = await response.json()
-    console.log(data)
-
     return data || []
   } catch (error) {
     console.error(error)

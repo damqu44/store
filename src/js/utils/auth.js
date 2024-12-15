@@ -43,17 +43,13 @@ export async function checkAuth() {
     })
 
     if (!response.ok) {
-      const errorData = await response.json()
-      console.error("Error:", errorData.message)
       return false
     }
 
     const data = await response.json()
-    console.log(data)
-
     return data.authenticated === true
   } catch (error) {
     console.error(error)
-    // window.location.href = "/login.html"
+    window.location.href = "/login.html"
   }
 }
