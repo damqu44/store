@@ -9,7 +9,16 @@ export async function loadHeader() {
   let cart = null
 
   try {
-    cart = await getCart()
+    let cartType = null
+
+    const isAuthenticated = await checkAuth()
+    if (isAuthenticated) {
+      cartType = ""
+    } else {
+      cartType = "cookies"
+    }
+
+    cart = await getCart(cartType)
   } catch (error) {
     console.error("Error loading cart data:", error)
   }
