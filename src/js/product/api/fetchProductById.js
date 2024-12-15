@@ -14,7 +14,7 @@ export async function fetchProductById(id) {
       throw new Error(response.statusText)
     }
     const product = await response.json()
-    displayProductDetails(product)
+    await displayProductDetails(product)
   } catch (error) {
     console.error("There has been a problem with your fetch operation:", error)
   }

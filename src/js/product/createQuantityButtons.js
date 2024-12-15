@@ -40,7 +40,6 @@ export function createQuantityButtons(product, isUpdate, cartType) {
 
   const incrementButton = quantityContainer.querySelector(".increment-button")
   const decrementButton = quantityContainer.querySelector(".decrement-button")
-  console.log(cartType)
 
   const updateCart = () => {
     if (isUpdate) {
