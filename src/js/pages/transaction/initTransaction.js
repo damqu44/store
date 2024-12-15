@@ -3,7 +3,7 @@ import "../../../css/radioInput.css"
 
 import { displayDeliveryMethods } from "../../transaction/displayDeliveryMethods"
 import { displayUserDetails } from "../../transaction/displayUserDetails"
-import { isAuthenticated } from "../../utils/auth"
+import { checkAuth } from "../../utils/auth"
 import { displayInvoiceDetails } from "../../transaction/displayInvoiceDetails"
 import { getUserInfo } from "../../account/api/getUserInfo"
 import { displayComment } from "../../transaction/displayComment"
@@ -12,7 +12,8 @@ import getTransactionData from "../../transaction/getTransactionData"
 import managePaymentMethods from "../../transaction/managePaymentMethods"
 
 document.addEventListener("DOMContentLoaded", async () => {
-  if (!isAuthenticated()) {
+  const isAuthenticated = await checkAuth()
+  if (!isAuthenticated) {
     window.location.href = "/login.html"
   }
 
