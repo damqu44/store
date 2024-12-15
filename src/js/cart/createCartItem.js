@@ -65,6 +65,7 @@ export function createCartItem(product, cartType) {
   deleteButton.addEventListener("click", () => {
     handleRemoveFromCart(product.Id, cartType)
   })
+  console.log(cartType)
 
   cartContent.appendChild(cartItemContainer)
   createQuantityButtons(product, true, cartType)
