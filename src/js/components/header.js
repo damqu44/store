@@ -1,5 +1,5 @@
 import $ from "jquery"
-import { isAuthenticated } from "../utils/auth"
+import { checkAuth } from "../utils/auth"
 import { getCart } from "../cart/api/getCart"
 import { handleSearch } from "../search/handleSearch"
 
@@ -29,7 +29,7 @@ export async function loadHeader() {
     "dark:bg-[#222222]"
   )
 
-  const authStatus = isAuthenticated()
+  const isAuthenticated = await checkAuth()
 
   header.innerHTML = `
       <div class="font-mono text-base sm:text-2xl text-primary">
@@ -67,8 +67,7 @@ export async function loadHeader() {
 
   const accountButton = document.getElementById("account-button")
   accountButton.addEventListener("click", () => {
-    console.log(authStatus)
-    if (authStatus) {
+    if (isAuthenticated) {
       window.location.href = "/account.html"
     } else {
       window.location.href = "/login.html"
