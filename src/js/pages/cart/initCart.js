@@ -14,9 +14,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       cartType = "cookies"
     }
+    console.log(cartType, isAuthenticated)
 
     const cart = await getCart(cartType)
-
     if (!cart.cartData || cart.cartData.length > 0) {
       cart.cartData.forEach((product) => {
         createCartItem(product, cartType)
