@@ -1,5 +1,6 @@
 import { displayProductDetails } from "../displayProductDetails"
 import { BASE_URL } from "../../../../backend-config"
+import { checkAuth } from "../../utils/auth"
 
 export async function fetchProductById(id) {
   try {
@@ -14,7 +15,16 @@ export async function fetchProductById(id) {
       throw new Error(response.statusText)
     }
     const product = await response.json()
-    await displayProductDetails(product)
+
+    let cartType = null
+    const isAuthenticated = await checkAuth()
+    if (isAuthenticated) {
+      cartType = ""
+    } else {
+      cartType = "cookies"
+    }
+
+    displayProductDetails(product, cartType)
   } catch (error) {
     console.error("There has been a problem with your fetch operation:", error)
   }

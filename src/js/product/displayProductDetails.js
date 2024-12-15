@@ -1,23 +1,13 @@
 import { handleAddToCart } from "../cart/api/handleAddToCart"
-import { checkAuth } from "../utils/auth"
 import checkAvailableDeliveryMethods from "./checkAvailableDeliveryMethods"
 import { createQuantityButtons } from "./createQuantityButtons"
 
-export async function displayProductDetails(product) {
+export function displayProductDetails(product, cartType) {
   displayProductInfo(product)
   initializeImageSlider(product)
   displayProductMenu(product)
   toggleDeliveryOptions()
   checkAvailableDeliveryMethods(product.DeliveryMethods)
-
-  let cartType = null
-
-  const isAuthenticated = await checkAuth()
-  if (isAuthenticated) {
-    cartType = ""
-  } else {
-    cartType = "cookies"
-  }
 
   function displayProductInfo(product) {
     const productDetails = document.getElementById("product-details")
