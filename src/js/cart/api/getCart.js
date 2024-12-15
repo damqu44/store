@@ -1,10 +1,10 @@
-import { isAuthenticated } from "../../utils/auth"
+import { checkAuth } from "../../utils/auth"
 import { BASE_URL } from "../../../../backend-config"
 
 export async function getCart() {
   let cartType = null
-  console.log(isAuthenticated())
-  if (isAuthenticated()) {
+  const isAuthenticated = await checkAuth()
+  if (isAuthenticated) {
     cartType = ""
   } else {
     cartType = "cookies"
