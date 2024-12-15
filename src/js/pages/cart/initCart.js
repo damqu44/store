@@ -2,14 +2,24 @@ import "../../../index.css"
 import { initializeCart } from "../../cart/initializeCart"
 import { getCart } from "../../cart/api/getCart"
 import { createCartItem } from "../../cart/createCartItem"
+import { checkAuth } from "../../utils/auth"
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const cart = await getCart()
+    let cartType = null
+
+    const isAuthenticated = await checkAuth()
+    if (isAuthenticated) {
+      cartType = ""
+    } else {
+      cartType = "cookies"
+    }
+
+    const cart = await getCart(cartType)
 
     if (!cart.cartData || cart.cartData.length > 0) {
       cart.cartData.forEach((product) => {
-        createCartItem(product)
+        createCartItem(product, cartType)
       })
     } else {
       emptyCart()

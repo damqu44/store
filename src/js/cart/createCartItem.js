@@ -1,16 +1,7 @@
 import { createQuantityButtons } from "../product/createQuantityButtons"
-import { isAuthenticated } from "../utils/auth"
 import { handleRemoveFromCart } from "./api/handleRemoveFromCart"
 
-export function createCartItem(product) {
-  let cartType = null
-
-  if (isAuthenticated()) {
-    cartType = ""
-  } else {
-    cartType = "cookies"
-  }
-
+export function createCartItem(product, cartType) {
   const cartContent = document.getElementById("cart-content")
   const cartItemContainer = document.createElement("div")
   cartItemContainer.id = `cart-item-${product.Id}`

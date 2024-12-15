@@ -1,15 +1,6 @@
-import { checkAuth } from "../../utils/auth"
 import { BASE_URL } from "../../../../backend-config"
 
-export async function getCart() {
-  let cartType = null
-  const isAuthenticated = await checkAuth()
-  if (isAuthenticated) {
-    cartType = ""
-  } else {
-    cartType = "cookies"
-  }
-
+export async function getCart(cartType) {
   try {
     const response = await fetch(`${BASE_URL}/cart/${cartType}`, {
       method: "GET",

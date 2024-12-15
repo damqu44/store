@@ -1,16 +1,7 @@
 import { updateCartCount } from "../../components/header"
-import { isAuthenticated } from "../../utils/auth"
 import { BASE_URL } from "../../../../backend-config"
 
-export async function handleAddToCart(product, isUpdate) {
-  let cartType = null
-
-  if (isAuthenticated()) {
-    cartType = ""
-  } else {
-    cartType = "cookies"
-  }
-
+export async function handleAddToCart(product, isUpdate, cartType) {
   try {
     const response = await fetch(`${BASE_URL}/cart/${cartType}`, {
       method: "POST",
