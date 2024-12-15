@@ -3,7 +3,7 @@ import { BASE_URL } from "../../../../backend-config"
 
 export async function getCart() {
   let cartType = null
-
+  console.log(isAuthenticated())
   if (isAuthenticated()) {
     cartType = ""
   } else {

@@ -32,7 +32,7 @@
 
 import { BASE_URL } from "../../../backend-config"
 
-export async function checkAuth() {
+export async function isAuthenticated() {
   try {
     const response = await fetch(`${BASE_URL}/verify-token`, {
       method: "GET",
