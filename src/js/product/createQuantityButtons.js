@@ -47,9 +47,9 @@ export function createQuantityButtons(product, isUpdate, cartType) {
         {
           Id: product.Id,
           Amount: parseInt(quantityInput.value, 10),
-          cartType,
         },
-        true
+        true,
+        cartType
       )
     }
   }
