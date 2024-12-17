@@ -158,7 +158,7 @@ async function register({
   userLastName,
 }) {
   try {
-    const response = await fetch(`${BASE_URL}//auth/register`, {
+    const response = await fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
