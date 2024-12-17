@@ -1,7 +1,7 @@
 import { createQuantityButtons } from "../product/createQuantityButtons"
 import { handleRemoveFromCart } from "./api/handleRemoveFromCart"
 
-export function createCartItem(product, cartType) {
+export async function createCartItem(product, cartType) {
   const cartContent = document.getElementById("cart-content")
   const cartItemContainer = document.createElement("div")
   cartItemContainer.id = `cart-item-${product.Id}`
@@ -63,7 +63,7 @@ export function createCartItem(product, cartType) {
     `
   const deleteButton = cartItemContainer.querySelector("#delete-button")
   deleteButton.addEventListener("click", () => {
-    handleRemoveFromCart(product.Id, cartType)
+    await handleRemoveFromCart(product.Id, cartType)
   })
 
   cartContent.appendChild(cartItemContainer)
