@@ -62,7 +62,7 @@ export async function createCartItem(product, cartType) {
         </div>
     `
   const deleteButton = cartItemContainer.querySelector("#delete-button")
-  deleteButton.addEventListener("click", () => {
+  deleteButton.addEventListener("click", async () => {
     await handleRemoveFromCart(product.Id, cartType)
   })
 
