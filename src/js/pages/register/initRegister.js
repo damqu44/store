@@ -1,6 +1,7 @@
 import "../../../index.css"
 import "../../../css/input.css"
 import { initializeInputFields } from "../../components/input"
+import { BASE_URL } from "../../../../backend-config"
 
 document.addEventListener("DOMContentLoaded", async () => {
   initializeInputFields(document.getElementById("register-form"))
@@ -157,7 +158,7 @@ async function register({
   userLastName,
 }) {
   try {
-    const response = await fetch("http://localhost:3000/auth/register", {
+    const response = await fetch(`${BASE_URL}//auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
