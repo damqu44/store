@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       cartType = "cookies"
     }
-    console.log(cartType, isAuthenticated)
 
     const cart = await getCart(cartType)
     if (!cart.cartData || cart.cartData.length > 0) {
@@ -32,7 +31,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         amount: item.cartInfo.Amount,
       }))
       sessionStorage.setItem("cartProducts", JSON.stringify(productData))
-      console.log("set")
       const transactionButton = document.getElementById("transaction-button")
       if (transactionButton) {
         transactionButton.addEventListener("click", () => {

@@ -4,7 +4,7 @@ import { emptyCart } from "../../pages/cart/initCart"
 import { BASE_URL } from "../../../../backend-config"
 
 export function handleRemoveFromCart(productId, cartType) {
-  fetch(`${BASE_URL}/cart/${cartType}/${productId}`, {
+  fetch(`${BASE_URL}/cart${cartType ? `/${cartType}` : ""}/${productId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
